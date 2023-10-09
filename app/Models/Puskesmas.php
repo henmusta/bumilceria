@@ -23,43 +23,43 @@ class Puskesmas extends Model
 
     public function lb3ibuhamil()
     {
-        return $this->hasMany(lb3ibuhamil::class);
+        return $this->hasMany(Lb3ibuhamil::class);
     }
 
     public function lb3ibubersalin()
     {
-        return $this->hasMany(lb3ibubersalin::class);
+        return $this->hasMany(Lb3ibubersalin::class);
     }
 
     public function lb3rtk()
     {
-        return $this->hasMany(lb3Rtk::class);
+        return $this->hasMany(Lb3Rtk::class);
     }
 
     public function lb3bayi()
     {
-        return $this->hasMany(lb3Bayi::class);
+        return $this->hasMany(Lb3Bayi::class);
     }
 
 
     public function lb3brtk()
     {
-        return $this->hasMany(lb3Brtk::class);
+        return $this->hasMany(Lb3Brtk::class);
     }
 
     public function lb3balita()
     {
-        return $this->hasMany(lb3Balita::class);
+        return $this->hasMany(Lb3Balita::class);
     }
 
     public function lki()
     {
-        return $this->hasMany(lki::class);
+        return $this->hasMany(Lki::class);
     }
 
     public function lbtt()
     {
-        return $this->hasMany(lbtt::class);
+        return $this->hasMany(Lbtt::class);
     }
 
     public function users()
