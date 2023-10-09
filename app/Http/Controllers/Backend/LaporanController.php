@@ -515,10 +515,7 @@ class LaporanController extends Controller
         }], 'nakes_terlatih_pmba_sdidtk')
         ->when( $puskesmas_id, function ($query,  $puskesmas_id) {
             $query->whereIn('id',  $puskesmas_id);
-        })
-
-
-            ;
+        });
 
 
         return $data;

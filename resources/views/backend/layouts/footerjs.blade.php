@@ -75,6 +75,7 @@
     <script src="{{asset('assets/backend/dist/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('assets/backend/vendor_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor_components/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.js"></script>
     <script src="{{ asset('assets/backend/vendor_components/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor_components/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('assets/backend/vendor_components/pdfmake/build/vfs_fonts.js') }}"></script>
