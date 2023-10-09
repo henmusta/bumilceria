@@ -349,7 +349,7 @@
                colum
            );
        }
-   },
+      },
        scrollX: true,
        processing: true,
        serverSide: true,
@@ -357,7 +357,11 @@
        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
        pageLength: 10,
        ajax: {
-       url: "{{ route('backend.laporan.index') }}",
+       headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+       },
+       type: 'POST',
+       url: "{{ route('backend.laporan.datatable') }}",
        data: function (d) {
            d.updt_puskesmas_id =  select2Puskesmas.val();
            d.tahun = $('#tahun').val();

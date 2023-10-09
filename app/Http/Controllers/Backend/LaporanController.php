@@ -541,4 +541,24 @@ class LaporanController extends Controller
         return view('backend.laporan.index', compact('config', 'page_breadcrumbs'));
     }
 
+    public function datatable(Request $request)
+    {
+
+        // $config['page_title'] = "Laporan";
+        // $page_breadcrumbs = [
+        //   ['url' => '#', 'title' => "Laporan"],
+        // ];
+
+        if ($request->ajax()) {
+          $data = $this->data($request);
+          return DataTables::of($data)
+            ->addColumn('action', function ($row) {
+                return '';
+            })
+            ->make(true);
+        }
+
+        // return view('backend.laporan.index', compact('config', 'page_breadcrumbs'));
+    }
+
 }

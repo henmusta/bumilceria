@@ -49,6 +49,7 @@ Route::middleware('auth:henmus')->group(function(){
       Route::resource('settings', Backend\SettingsController::class);
 
 
+
             Route::get('dashboard/countadmin', [Backend\DashboardController::class, 'countadmin'])->name('dashboard.countadmin');
             Route::resource('dashboard', Backend\DashboardController::class);
 
@@ -84,6 +85,8 @@ Route::middleware('auth:henmus')->group(function(){
        Route::resource('lki', Backend\LkiController::class);
 
        Route::resource('lbtt', Backend\LbttController::class);
+
+       Route::post('laporan/datatable', [Backend\LaporanController::class, 'datatable'])->name('laporan.datatable');
        Route::resource('laporan', Backend\LaporanController::class);
 
     });
