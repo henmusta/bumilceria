@@ -23,7 +23,7 @@ class PuskesmasController extends Controller
       ];
 
       if ($request->ajax()) {
-        $data = Puskesmas::selectRaw('updt_puskesmas.*')->with('wilayah');
+        $data = Puskesmas::selectRaw('puskesmas.*')->with('wilayah');
         return DataTables::of($data)
           ->addIndexColumn()
           ->addColumn('action', function ($row) {
