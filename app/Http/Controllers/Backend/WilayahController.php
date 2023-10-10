@@ -24,7 +24,7 @@ class WilayahController extends Controller
       ];
 
       if ($request->ajax()) {
-        $data = Wilayah::selectRaw('wilayah.*')->with('provinsi', 'kabupaten', 'kecamatan');
+        $data = Wilayah::selectRaw('wilayah.*')->with('provinsi', 'kabupaten', 'kecamatan')->where('kabupaten_id', '132');
         return DataTables::of($data)
           ->addIndexColumn()
           ->addColumn('action', function ($row) {
