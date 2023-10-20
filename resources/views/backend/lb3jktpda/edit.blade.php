@@ -115,7 +115,7 @@
                     width 		: '20%',
 					render 		: function ( columnData, type, rowData, meta ) {
                         return String(`
-                            <input type="number" min="0" max="15" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][0_sampai_15]"">
+                            <input type="number" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][0_sampai_15]"">
 						`).trim();
 					}
 				},
@@ -125,7 +125,7 @@
                     width 		: '20%',
 					render 		: function ( columnData, type, rowData, meta ) {
                         return String(`
-                            <input type="number" min="16" max="45" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][16_sampai_45]"">
+                            <input type="number" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][16_sampai_45]"">
 						`).trim();
 					}
 				},
@@ -135,7 +135,7 @@
                     width 		: '20%',
 					render 		: function ( columnData, type, rowData, meta ) {
                         return String(`
-                            <input type="number" min="16" max="45" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][46_sampai_60]"">
+                            <input type="number" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][46_sampai_60]"">
 						`).trim();
 					}
 				},
@@ -145,7 +145,7 @@
                     width 		: '20%',
 					render 		: function ( columnData, type, rowData, meta ) {
                         return String(`
-                            <input type="number" min="60" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][60_keatas]"">
+                            <input type="number" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][60_keatas]"">
 						`).trim();
 					}
 				},

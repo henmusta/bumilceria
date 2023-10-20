@@ -264,7 +264,7 @@
                               },
                             title: {
                                 display: true,
-                                text: 'Chart Kegiatan Tidak/Sesuai Tupoksi Perkecamatan'
+                                text: 'Statistik Penginputan Total'
                             },
                             responsive: true,
                             maintainAspectRatio: false,
