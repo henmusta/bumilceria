@@ -60,7 +60,7 @@ class DashboardController extends Controller
             $dateRangePeriod = CarbonPeriod::create($startDate,  '1 month', $endDate);
             foreach ($dateRangePeriod as $date) {
                 $dateRange[] = Carbon::createFromFormat('Y-m-d', $date->toDateString())->format('F Y');
-                $table = ['lb3_ibu_hamil','lb3_ibu_bersalin', 'lb3_balita', 'lb3_bayi', 'lb3_brtk', 'lb3_jktpda', 'lb3_jktpda_detail', 'lb3_kytd', 'lb3_rtk', 'lbtt', 'lki'];
+                $table = ['lb3_ibu_hamil','lb3_ibu_bersalin', 'lb3_balita', 'lb3_bayi', 'lb3_brtk', 'lb3_jktpda', 'lb3_kytd', 'lb3_rtk', 'lbtt', 'lki'];
                 $grandtotal = 0;
                 foreach($table as $val){
                     $total = DB::table($val)
