@@ -4,14 +4,14 @@
 
 @section('content')
 
-    <div class="card bg-light-info shadow-none position-relative overflow-hidden">
+   <div class="card bg-light-info shadow-none position-relative overflow-hidden">
         <div class="card-header mb-3">
             <div class="d-flex align-items-start">
                 <div class="flex-grow-1">
                     {{-- <h5 class="card-title mb-3">Transaction</h5> --}}
                 </div>
                 <div class="flex-shrink-0">
-                    <a class="btn btn-primary " href="{{ route('backend.lb3balita.create') }}">
+                    <a class="btn btn-primary " href="{{ route('backend.lb3kytd.create') }}">
                         Tambah
                         <i class="fas fa-plus"></i>
                     </a>
@@ -26,7 +26,7 @@
                 <table id="Datatable" class="table table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Tahun</th>
+                            <th>Bulan Tahun</th>
                             <th>Puskesmas</th>
                             <th>Aksi</th>
                           </tr>
@@ -91,7 +91,7 @@
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
         pageLength: 10,
         ajax: {
-          url: "{{ route('backend.lb3balita.index') }}",
+          url: "{{ route('backend.lb3kytd.index') }}",
           data: function (d) {
             d.puskesmas_id = $('#user_puskes_id').val();
           }
@@ -117,7 +117,7 @@
       modalDelete.addEventListener('show.bs.modal', function (event) {
         let button = event.relatedTarget;
         let id = button.getAttribute('data-bs-id');
-        this.querySelector('.urlDelete').setAttribute('href', '{{ route("backend.lb3balita.index") }}/' + id);
+        this.querySelector('.urlDelete').setAttribute('href', '{{ route("backend.lb3kytd.index") }}/' + id);
       });
       modalDelete.addEventListener('hidden.bs.modal', function (event) {
         this.querySelector('.urlDelete').setAttribute('href', '');

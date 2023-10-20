@@ -11,7 +11,7 @@ class Lb3ibubersalin extends Model
 
     protected $table = 'lb3_ibu_bersalin';
     protected $fillable = [
-      'tahun',
+      'tanggal',
       'puskesmas_id',
       'jsib',
       'ibu_bersalin',

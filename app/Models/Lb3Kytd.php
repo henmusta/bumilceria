@@ -5,20 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lb3Brtk extends Model
+class Lb3Kytd extends Model
 {
-    protected $table = 'lb3_brtk';
+    use HasFactory;
+    protected $table = 'lb3_kytd';
     protected $fillable = [
       'tanggal',
       'puskesmas_id',
-      'bblr',
-      'asfiksia',
-      'infeksi',
-      'tetanus',
-      'kelainan',
-      'covid19',
-      'hipotiroid',
-      'lain_lain'
+      'unmet_need',
+      'kehamilan_diluar_nikah',
+      'kegagalan_kb',
     ];
 
 

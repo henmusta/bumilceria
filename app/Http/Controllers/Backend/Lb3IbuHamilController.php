@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lb3ibuhamil;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -25,6 +26,9 @@ class Lb3IbuHamilController extends Controller
 
       if ($request->ajax()) {
         $data = Lb3ibuhamil::selectRaw('lb3_ibu_hamil.*')->with('puskesmas');
+        if ($request->filled('puskesmas_id')) {
+            $data->where('puskesmas_id',  $request['puskesmas_id']);
+        }
         return DataTables::of($data)
           ->addIndexColumn()
           ->addColumn('action', function ($row) {
@@ -41,7 +45,10 @@ class Lb3IbuHamilController extends Controller
                   </div>';
 
           })
-          ->rawColumns(['action'])
+          ->addColumn('tanggal', function ($row) {
+            return Carbon::parse($row->tanggal)->isoFormat('MMMM YYYY');
+          })
+          ->rawColumns(['action', 'tanggal'])
           ->make(true);
       }
       return view('backend.lb3ibuhamil.index', compact('config', 'page_breadcrumbs'));
@@ -62,7 +69,7 @@ class Lb3IbuHamilController extends Controller
     public function store(Request $request)
     {
           $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'jsih' => 'required',
             'k1_total' => 'required',
@@ -83,8 +90,9 @@ class Lb3IbuHamilController extends Controller
 
             DB::beginTransaction();
             try {
-                 $data = Lb3ibuhamil::create([
-                    'tahun' =>  $request['tahun'],
+                 $cek = ['tanggal'=> $request['tanggal'],  'puskesmas_id' =>  $request['updt_puskesmas_id']];
+                 $data = Lb3ibuhamil::updateOrCreate($cek,[
+                    'tanggal' =>  $request['tanggal'],
                     'puskesmas_id' =>  $request['updt_puskesmas_id'],
                     'jsih' =>  $request['jsih'],
                     'k1_total' =>  $request['k1_total'],
@@ -153,7 +161,7 @@ class Lb3IbuHamilController extends Controller
     public function update(Request $request, $id)
     {
           $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'jsih' => 'required',
             'k1_total' => 'required',
@@ -172,27 +180,42 @@ class Lb3IbuHamilController extends Controller
           if ($validator->passes()) {
             DB::beginTransaction();
             try {
-                $data = Lb3ibuhamil::find($id);
-                $data->update([
-                    'tahun' =>  $request['tahun'],
-                    'puskesmas_id' =>  $request['updt_puskesmas_id'],
-                    'jsih' =>  $request['jsih'],
-                    'k1_total' =>  $request['k1_total'],
-                    'k1_murni' =>  $request['k1_murni'],
-                    'k4' =>  $request['k4'],
-                    'k6' =>  $request['k6'],
-                    'ihttm' =>  $request['ihttm'],
-                    'ibdjtd' =>  $request['ibdjtd'],
-                    'ihdktb' =>  $request['ihdktb'],
-                    'k1_ok' =>  $request['k1_ok'],
-                    'k5_ok' =>  $request['k5_ok'],
-                    'k1_usg_ok' =>  $request['k1_usg_ok'],
-                    'k5_usg_ok' =>  $request['k5_usg_ok'],
-                    'ibmb_kia' =>  $request['ibmb_kia']
-                ]);
+                //  $data = Lb3ibuhamil::find($id);
+
+                 $cek_uniqe = Lb3ibuhamil::where([
+                    ['tanggal' ,  $request['tanggal']],
+                    ['puskesmas_id' ,  $request['updt_puskesmas_id']],
+                    ['id' , '!=' , $id]
+                 ])->first();
+                 if(isset($cek_uniqe)){
+                    $response = response()->json([
+                        'error' => true,
+                        'message' => 'Data Tanggal Dan Kecamatan Yang Sama Telah Ada Sebelumnya',
+                    ]);
+                 }else{
+                    $data = Lb3ibuhamil::findOrFail($id);
+                    $data->update([
+                       'tanggal' =>  $request['tanggal'],
+                       'puskesmas_id' =>  $request['updt_puskesmas_id'],
+                       'jsih' =>  $request['jsih'],
+                       'k1_total' =>  $request['k1_total'],
+                       'k1_murni' =>  $request['k1_murni'],
+                       'k4' =>  $request['k4'],
+                       'k6' =>  $request['k6'],
+                       'ihttm' =>  $request['ihttm'],
+                       'ibdjtd' =>  $request['ibdjtd'],
+                       'ihdktb' =>  $request['ihdktb'],
+                       'k1_ok' =>  $request['k1_ok'],
+                       'k5_ok' =>  $request['k5_ok'],
+                       'k1_usg_ok' =>  $request['k1_usg_ok'],
+                       'k5_usg_ok' =>  $request['k5_usg_ok'],
+                       'ibmb_kia' =>  $request['ibmb_kia']
+                   ]);
+                   $response = response()->json($this->responseStore(true, route('backend.lb3ibuhamil.index')));
+                 }
 
                 DB::commit();
-                $response = response()->json($this->responseStore(true, route('backend.lb3ibuhamil.index')));
+
             } catch (Throwable $throw) {
                 dd($throw);
                 DB::rollBack();

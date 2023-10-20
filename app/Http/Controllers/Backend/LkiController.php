@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lki;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -24,6 +25,9 @@ class LkiController extends Controller
 
       if ($request->ajax()) {
         $data = Lki::selectRaw('lki.*')->with('puskesmas');
+        if ($request->filled('puskesmas_id')) {
+            $data->where('puskesmas_id',  $request['puskesmas_id']);
+        }
         return DataTables::of($data)
           ->addIndexColumn()
           ->addColumn('action', function ($row) {
@@ -40,7 +44,10 @@ class LkiController extends Controller
                   </div>';
 
           })
-          ->rawColumns(['action'])
+          ->addColumn('tanggal', function ($row) {
+            return Carbon::parse($row->tanggal)->isoFormat('MMMM YYYY');
+          })
+          ->rawColumns(['action', 'tanggal'])
           ->make(true);
       }
       return view('backend.lki.index', compact('config', 'page_breadcrumbs'));
@@ -61,7 +68,7 @@ class LkiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'jpkih' => 'required',
             'jpkib' => 'required',
@@ -72,8 +79,9 @@ class LkiController extends Controller
 
             DB::beginTransaction();
             try {
-                 $data = Lki::create([
-                    'tahun' =>  $request['tahun'],
+                $cek = ['tanggal'=> $request['tanggal'],  'puskesmas_id' =>  $request['updt_puskesmas_id']];
+                $data = Lki::updateOrCreate($cek,[
+                    'tanggal' =>  $request['tanggal'],
                     'puskesmas_id' =>  $request['updt_puskesmas_id'],
                     'jpkih' =>  $request['jpkih'],
                     'jpkib' =>  $request['jpkib'],
@@ -102,7 +110,9 @@ class LkiController extends Controller
           ['url' => route('backend.lki.index'), 'title' => "Detail Laporan Kelas Ibu"],
           ['url' => '#', 'title' => "Detail Laporan Kelas Ibu"],
         ];
+
         $lki = Lki::selectRaw('lki.*')->with('puskesmas')->findOrFail($id);
+
         $data = [
           'lki' =>  $lki,
         ];
@@ -129,7 +139,7 @@ class LkiController extends Controller
     public function update(Request $request, $id)
     {
           $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'jpkih' => 'required',
             'jpkib' => 'required',
@@ -137,16 +147,27 @@ class LkiController extends Controller
           if ($validator->passes()) {
             DB::beginTransaction();
             try {
-                $data = Lki::find($id);
-                $data->update([
-                    'tahun' =>  $request['tahun'],
-                    'puskesmas_id' =>  $request['updt_puskesmas_id'],
-                    'jpkih' =>  $request['jpkih'],
-                    'jpkib' =>  $request['jpkib'],
-                ]);
-
-                DB::commit();
-                $response = response()->json($this->responseStore(true, route('backend.lki.index')));
+                $cek_uniqe = Lki::where([
+                    ['tanggal' ,  $request['tanggal']],
+                    ['puskesmas_id' ,  $request['updt_puskesmas_id']],
+                    ['id' , '!=' , $id]
+                 ])->first();
+                 if(isset($cek_uniqe)){
+                    $response = response()->json([
+                        'error' => true,
+                        'message' => 'Data Tanggal Dan Kecamatan Yang Sama Telah Ada Sebelumnya',
+                    ]);
+                 }else{
+                    $data = Lki::findOrFail($id);
+                    $data->update([
+                        'tanggal' =>  $request['tanggal'],
+                        'puskesmas_id' =>  $request['updt_puskesmas_id'],
+                        'jpkih' =>  $request['jpkih'],
+                        'jpkib' =>  $request['jpkib'],
+                    ]);
+                    DB::commit();
+                    $response = response()->json($this->responseStore(true, route('backend.lki.index')));
+                 }
             } catch (Throwable $throw) {
                 dd($throw);
                 DB::rollBack();

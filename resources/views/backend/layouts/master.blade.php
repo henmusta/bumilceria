@@ -52,7 +52,7 @@
       </aside>
       <div class="body-wrapper">
         @include('backend.layouts.header')
-        <div class="container-fluid">
+        <div class="container-fluid mw-100">
             <!-- --------------------------------------------------- -->
             <!--  table advance Start -->
             <!-- --------------------------------------------------- -->
@@ -132,7 +132,7 @@
 
 
 
-  @include('backend.layouts.option')
+  {{-- @include('backend.layouts.option') --}}
   @include('backend.layouts.footerjs')
     <script type="text/javascript">
         $(document).ajaxError(function (event, jqxhr, settings, thrownError) {

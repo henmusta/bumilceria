@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 
 @section('content')
-<div class="card">
+<div class="card bg-light-info shadow-none position-relative overflow-hidden">
     <div class="row row-sm">
         <div class="col-lg-12 col-md-12">
             <form id="formStore" action="{{ route('backend.lb3rtk.store') }}" autocomplete="off">
@@ -29,7 +29,9 @@
                         <div class="col-sm-6">
                             <div class="mb-3">
                                 <label for="Nama">Tahun<span class="text-danger">*</span></label>
-                                <input type="number" value="{{ \Carbon\Carbon::now()->startOfYear()->format('Y') }}" class="form-control" placeholder="Pilih Tahun" id="tahun" name="tahun">
+                                  <select id="select2Datepicker" style="width: 100% !important;" name="tanggal">
+                                  </select>
+                                {{-- <input type="number" value="{{ \Carbon\Carbon::now()->startOfYear()->format('Y') }}" class="form-control" placeholder="Pilih Tahun" id="tahun" name="tahun"> --}}
                             </div>
                         </div>
                     </div>
@@ -142,17 +144,28 @@
   <script>
     $(document).ready(function () {
 
-        $('#tahun').flatpickr({
-            disableMobile: "true",
-            plugins: [
-                new monthSelectPlugin({
-                shorthand: true,
-                dateFormat: "Y",
-                theme: "dark"
-                })
-            ]
-         });
-
+        let select2Datepicker = $('#select2Datepicker');
+     select2Datepicker.select2({
+        dropdownParent:select2Datepicker.parent(),
+        searchInputPlaceholder: 'Cari',
+        width: '100%',
+        placeholder: 'select bulan Tahun',
+        ajax: {
+          url: "{{ route('datepicker.index') }}",
+          dataType: "json",
+          cache: true,
+          data: function (e) {
+            return {
+            //   id : $('#user_puskes_id').val(),
+              q: e.term || '',
+              page: e.page || 1
+            }
+          },
+        },
+      }).on('select2:select', function (e) {
+            let data = e.params.data;
+            console.log(data.id);
+      });
       let select2Puskesmas = $('#select2Puskesmas');
       select2Puskesmas.select2({
         dropdownParent: select2Puskesmas.parent(),

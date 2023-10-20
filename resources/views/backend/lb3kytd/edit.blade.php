@@ -4,7 +4,7 @@
 <div class="card bg-light-info shadow-none position-relative overflow-hidden">
     <div class="row row-sm">
         <div class="col-lg-12 col-md-12">
-            <form id="formUpdate" action="{{ route('backend.lb3ibuhamil.update', Request::segment(3)) }}">
+            <form id="formUpdate" action="{{ route('backend.lb3kytd.update', Request::segment(3)) }}">
                 <meta name="csrf-token" content="{{ csrf_token() }}">
                 @method('PUT')
                 <div class="card-header">
@@ -23,7 +23,7 @@
                              <div class="mb-3">
                                <label for="select2Puskesmas">UPDT Puskesmas<span class="text-danger">*</span></label>
                                 <select id="select2Puskesmas" style="width: 100% !important;" name="updt_puskesmas_id">
-                                    <option value="{{ $data['lb3ibuhamil']['puskesmas']['id'] }}">{{$data['lb3ibuhamil']['puskesmas']['name'] }}</option>
+                                    <option value="{{ $data['lb3kytd']['puskesmas']['id'] }}">{{$data['lb3kytd']['puskesmas']['name'] }}</option>
                                 </select>
                              </div>
                          </div>
@@ -32,7 +32,7 @@
                               <div class="mb-3">
                                   <label for="Nama">Tanggal<span class="text-danger">*</span></label>
                                   <select id="select2Datepicker" style="width: 100% !important;" name="tanggal">
-                                    <option value="{{ $data['lb3ibuhamil']['tanggal'] }}">{{ \Carbon\Carbon::parse($data['lb3ibuhamil']['tanggal'])->isoFormat('MMMM YYYY') }}</option>
+                                    <option value="{{ $data['lb3kytd']['tanggal'] }}">{{ \Carbon\Carbon::parse($data['lb3kytd']['tanggal'])->isoFormat('MMMM YYYY') }}</option>
                                   </select>
                               </div>
                           </div>
@@ -43,79 +43,20 @@
                             <div class="col-8">
                                 <div class="d-flex flex-column">
                                     <div class="mb-3">
-                                        <label for="Nama">Jumlah Sasaran Ibu Hamil<span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['jsih'] }}"  name="jsih">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="Nama">K1 Total<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah Seluruh K1 (Akses dan Murni)</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['k1_total'] }}"  name="k1_total">
+                                        <label for="Nama">Unmeed Need<span class="text-danger">*</span></label>
+                                        <input type="number" value="{{ $data['lb3kytd']['unmet_need'] }}" class="form-control"  name="unmet_need">
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label for="Nama">K1 Murni<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah K1 pada kehamilan trimester 1</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['k1_murni'] }}"  name="k1_murni">
-                                    </div>
 
                                     <div class="mb-3">
-                                        <label for="Nama">K4<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah ibu hamil telah memenuhi K4</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['k4'] }}"  name="k4">
+                                        <label for="Nama">Kehamilan Di Luar Nikah<span class="text-danger">*</span></label>
+                                        <input type="number"  value="{{ $data['lb3kytd']['kehamilan_diluar_nikah'] }}" class="form-control"  name="kehamilan_diluar_nikah">
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label for="Nama">K6<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah Ibu hamil memenuhi K6 (K4 ditambah 2 kali pemeriksaan oleh dokter)</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['k6'] }}" name="k6">
-                                    </div>
 
                                     <div class="mb-3">
-                                        <label for="Nama">Ibu Hamil Terlalu Tua/Muda<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Usia kurang dari 20 th atau lebih dari 35 th</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['ihttm'] }}" name="ihttm">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Nama">Ibu hamil dengan jarak terlalu dekat<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Spasi antar kehamilan kurang dari 2 tahun</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['ibdjtd'] }}"  name="ibdjtd">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Nama">Ibu hamil dengan kehamilan terlalu banyak<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah Ibu hamil dengan kehamilan ke-5 atau lebih</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['ihdktb'] }}"  name="ihdktb">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Nama">K1 oleh dokter<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah Ibu hamil pertama kali pemeriksaan oleh dokter dengan dan tanpa USG</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['k1_ok'] }}" name="k1_ok">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Nama">K5 oleh dokter<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah Ibu hamil memenuhi K4 ditambah 1 kali pemeriksaan oleh dokter dengan dan tanpa USG</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['k5_ok'] }}" name="k5_ok">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Nama">K1 USG oleh dokter<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah Ibu hamil pertama kali pemeriksaan oleh dokter dengan menggunakan USG</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['k1_usg_ok'] }}" name="k1_usg_ok">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Nama">K5 USG oleh dokter<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah Ibu hamil memenuhi K4 ditambah 1 kali pemeriksaan oleh dokter dengan menggunakan USG</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['k5_usg_ok'] }}"  name="k5_usg_ok">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Nama">Ibu hamil mempunyai buku KIA<span class="text-danger">*</span></label>
-                                        <p style="font-size:10px;">Jumlah seluruh Ibu yang sedang hamil dan memiliki buku KIA pada bulan ini</p>
-                                        <input type="number" class="form-control" value="{{ $data['lb3ibuhamil']['ibmb_kia'] }}" name="ibmb_kia">
+                                        <label for="Nama">Kegagalan KB<span class="text-danger">*</span></label>
+                                        <input type="number"  value="{{ $data['lb3kytd']['kegagalan_kb'] }}" class="form-control"  name="kegagalan_kb">
                                     </div>
                                 </div>
                             </div>

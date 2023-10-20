@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lb3Bayi;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -24,6 +25,9 @@ class Lb3BayiController extends Controller
 
       if ($request->ajax()) {
         $data = Lb3bayi::selectRaw('lb3_bayi.*')->with('puskesmas');
+        if ($request->filled('puskesmas_id')) {
+            $data->where('puskesmas_id',  $request['puskesmas_id']);
+        }
         return DataTables::of($data)
           ->addIndexColumn()
           ->addColumn('action', function ($row) {
@@ -40,7 +44,10 @@ class Lb3BayiController extends Controller
                   </div>';
 
           })
-          ->rawColumns(['action'])
+          ->addColumn('tanggal', function ($row) {
+            return Carbon::parse($row->tanggal)->isoFormat('MMMM YYYY');
+          })
+          ->rawColumns(['action', 'tanggal'])
           ->make(true);
       }
       return view('backend.lb3bayi.index', compact('config', 'page_breadcrumbs'));
@@ -61,7 +68,7 @@ class Lb3BayiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'sasaran_bayi_laki-laki' => 'required',
             'sasaran_bayi_perempuan' => 'required',
@@ -79,8 +86,9 @@ class Lb3BayiController extends Controller
 
             DB::beginTransaction();
             try {
-                 $data = Lb3Bayi::create([
-                    'tahun' =>  $request['tahun'],
+                $cek = ['tanggal'=> $request['tanggal'],  'puskesmas_id' =>  $request['updt_puskesmas_id']];
+                $data = Lb3Bayi::updateOrCreate($cek,[
+                    'tanggal' =>  $request['tanggal'],
                     'puskesmas_id' =>  $request['updt_puskesmas_id'],
                     'sasaran_bayi_laki_laki' => $request['sasaran_bayi_laki-laki'],
                     'sasaran_bayi_perempuan' => $request['sasaran_bayi_perempuan'],
@@ -144,7 +152,7 @@ class Lb3BayiController extends Controller
     public function update(Request $request, $id)
     {
           $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'sasaran_bayi_laki-laki' => 'required',
             'sasaran_bayi_perempuan' => 'required',
@@ -160,24 +168,38 @@ class Lb3BayiController extends Controller
           if ($validator->passes()) {
             DB::beginTransaction();
             try {
-                $data = Lb3Bayi::find($id);
-                $data->update([
-                    'tahun' =>  $request['tahun'],
-                    'puskesmas_id' =>  $request['updt_puskesmas_id'],
-                    'sasaran_bayi_laki_laki' => $request['sasaran_bayi_laki-laki'],
-                    'sasaran_bayi_perempuan' => $request['sasaran_bayi_perempuan'],
-                    'bayi_lahir_laki_laki' => $request['bayi_lahir_laki-laki'],
-                    'bayi_lahir_perempuan' => $request['bayi_lahir_perempuan'],
-                    'kn1_laki_laki' => $request['kn1_laki-laki'],
-                    'kn1_perempuan' => $request['kn1_perempuan'],
-                    'kn3_laki_laki' => $request['kn3_laki-laki'],
-                    'kn3_perempuan' => $request['kn3_perempuan'],
-                    'bbl_lld_shk' => $request['bbl_lld_shk'],
-                    'bbl_pd_shk' => $request['bbl_pd_shk'],
-                ]);
 
-                DB::commit();
-                $response = response()->json($this->responseStore(true, route('backend.lb3bayi.index')));
+                $cek_uniqe = Lb3Bayi::where([
+                    ['tanggal' ,  $request['tanggal']],
+                    ['puskesmas_id' ,  $request['updt_puskesmas_id']],
+                    ['id' , '!=' , $id]
+                 ])->first();
+                 if(isset($cek_uniqe)){
+                    $response = response()->json([
+                        'error' => true,
+                        'message' => 'Data Tanggal Dan Kecamatan Yang Sama Telah Ada Sebelumnya',
+                    ]);
+                 }else{
+                    $data = Lb3Bayi::findOrFail($id);
+                    $data->update([
+                        'tanggal' =>  $request['tanggal'],
+                        'puskesmas_id' =>  $request['updt_puskesmas_id'],
+                        'sasaran_bayi_laki_laki' => $request['sasaran_bayi_laki-laki'],
+                        'sasaran_bayi_perempuan' => $request['sasaran_bayi_perempuan'],
+                        'bayi_lahir_laki_laki' => $request['bayi_lahir_laki-laki'],
+                        'bayi_lahir_perempuan' => $request['bayi_lahir_perempuan'],
+                        'kn1_laki_laki' => $request['kn1_laki-laki'],
+                        'kn1_perempuan' => $request['kn1_perempuan'],
+                        'kn3_laki_laki' => $request['kn3_laki-laki'],
+                        'kn3_perempuan' => $request['kn3_perempuan'],
+                        'bbl_lld_shk' => $request['bbl_lld_shk'],
+                        'bbl_pd_shk' => $request['bbl_pd_shk'],
+                    ]);
+
+                    DB::commit();
+                    $response = response()->json($this->responseStore(true, route('backend.lb3bayi.index')));
+                 }
+
             } catch (Throwable $throw) {
                 dd($throw);
                 DB::rollBack();

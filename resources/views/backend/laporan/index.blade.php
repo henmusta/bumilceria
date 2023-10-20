@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="card">
+    <div class="card bg-light-info shadow-none position-relative overflow-hidden">
         <div class="card-header mb-3">
             {{-- @if(Auth::user()->roles[0]->id != '5') --}}
             <div class="col-xl-12">
@@ -39,15 +39,8 @@
                             <div class="multi-collapse collapse show" id="multiCollapseExample2" style="">
                                 <div class="card border shadow-none card-body text-muted mb-0">
                                     <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="mb-3">
-                                                <label>Tahun</label>
-                                                <div class=" input-group mb-3">
-                                                <input {{isset(Auth::user()->puskesmas->id) ? 'readonly' : ''}} type="text" id="tahun" class="form-control datePicker"  placeholder="Tanggal Awal"  value="{{ \Carbon\Carbon::now()->startOfYear()->format('Y') }}"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
+
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="select2Puskesmas">UPDT Puskesmas<span class="text-danger"></span></label>
                                                 <select id="select2Puskesmas" name="updt_puskesmas_id[]"  style="width: 100% !important;" class="js-example-basic-multiple"  multiple="multiple" style="width: 100% !important;" name="updt_puskesmas_id">
@@ -55,7 +48,37 @@
                                                 </select>
                                               </div>
                                         </div>
-                                        <div  {{Auth::user()->roles[0]->id == 5 ? 'hidden' : ''}} class="col-md-2 text-end" style="padding-top:30px; padding-left:0px !important;">
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label for="select2Type">Tipe Tanggal<span class="text-danger"></span></label>
+                                                <select style="width: 100% !important;" id="select2Type" class="js-example-basic-multiple" name="type">
+                                                    <option value="year" selected>Tahun</option>
+                                                    <option value="month">Bulan</option>
+                                                    <option value="s1">Semester 1</option>
+                                                    <option value="s2">Semester 2</option>
+                                                    <option value="t1">Triwulan 1</option>
+                                                    <option value="t2">Triwulan 2</option>
+                                                    <option value="t3">Triwulan 3</option>
+                                                    <option value="t4">Triwulan 4</option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                        <div id="bulan" class="col-md-3">
+                                            <div class="mb-3">
+                                                <label for="select2Bulan">Bulan<span class="text-danger"></span></label>
+                                                <select style="width: 100% !important;" id="select2Bulan" class="js-example-basic-multiple" name="type">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div id="tahun" class="col-md-3">
+                                            <div class="mb-3">
+                                                <label for="select2Bulan">Tahun<span class="text-danger"></span></label>
+                                                <select style="width: 100% !important;" id="select2Tahun" class="js-example-basic-multiple" name="type">
+                                                    <option value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">{{ \Carbon\Carbon::now()->format('Y') }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div  {{Auth::user()->roles[0]->id == 5 ? 'hidden' : ''}} class="col-md-2 text-end" style="padding-top:23px; padding-left:0px !important;">
                                             <a id="terapkan_filter" class="btn btn-success">
                                                 Terapkan Filter
                                                 <i class="fas fa-align-justify"></i>
@@ -76,198 +99,155 @@
 
         <div class="card-body">
             <section class="datatables">
-              <div class="table-responsive">
-                <table id="Datatable" class="table table-bordered" style="width:100%">
-                    <thead>
+                <div class="table-responsive">
+                  <table id="Datatable" class="table table-bordered" style="width:100%">
+                      <thead>
+                          <tr>
+                              <th>Nama Puskesmas</th>
+                              {{-- ibu hamil --}}
+                              <th class="text-center" width=>Jumlah Sasaran Ibu Hamil</th>
+                              <th class="text-center" width=>K1 Total</th>
+                              <th class="text-center" width=>K1 Murni</th>
+                              <th class="text-center" width=>K4</th>
+                              <th class="text-center" width=>K6</th>
+                              <th class="text-center" width=>Ibu Hamil Terlalu Tua/Muda</th>
+                              <th class="text-center" width=>Ibu hamil dengan jarak terlalu dekat</th>
+                              <th class="text-center" width=>Ibu hamil dengan kehamilan terlalu banyak</th>
+                              <th class="text-center" width=>K1 Oleh Dokter</th>
+                              <th class="text-center" width=>K5 Oleh Dokter</th>
+                              <th class="text-center" width=>K1 USG Oleh Dokter</th>
+                              <th class="text-center" width=>K5 USG Oleh Dokter</th>
+                              <th class="text-center" width=>Ibu hamil mempunyai buku KIA</th>
+
+
+
+                              <th class="text-center" width=>Jumlah Sasaran Ibu Bersalin</th>
+                              <th class="text-center" width=>Ibu Bersalin</th>
+                              <th class="text-center" width=>Ibu Bersalin Nakes</th>
+                              <th class="text-center" width=>Ibu bersalin faskes</th>
+                              <th class="text-center" width=>KF1</th>
+                              <th class="text-center" width=>KF Lengkap</th>
+                              <th class="text-center" width=>Vit A Ibu Nifas</th>
+
+
+
+
+                              <th class="text-center" width=>Anemia Trimester I</th>
+                              <th class="text-center" width=>Anemia Trimester III</th>
+                              <th class="text-center" width=>Pendarahan</th>
+                              <th class="text-center" width=>Pre Eklamsia</th>
+                              <th class="text-center" width=>Infeksi</th>
+                              <th class="text-center" width=>Tuberculosis</th>
+                              <th class="text-center" width=>Malaria</th>
+                              <th class="text-center" width=>Jantung</th>
+                              <th class="text-center" width=>Diabetes Mellitus</th>
+                              <th class="text-center" width=>Obesitas</th>
+                              <th class="text-center" width=>Covid19</th>
+                              <th class="text-center" width=>Abortus</th>
+                              <th class="text-center" width=>Lain Lain</th>
+
+
+
+                              <th class="text-center" width=>Sasaran Bayi Laki Laki</th>
+                              <th class="text-center" width=>Sasaran Bayi Perempuan</th>
+                              <th class="text-center" width=>Bayi Lahir Laki Laki</th>
+                              <th class="text-center" width=>Bayi Lahir Perempuan</th>
+                              <th class="text-center" width=>KN1 Laki Laki</th>
+                              <th class="text-center" width=>KN1 Perempuan</th>
+                              <th class="text-center" width=>KN3 Laki Laki</th>
+                              <th class="text-center" width=>KN3 Perempuan</th>
+                              <th class="text-center" width=>BBL laki-laki diperiksa SHK</th>
+                              <th class="text-center" width=>BBL perempuan diperiksa SHK</th>
+
+
+
+                              <th class="text-center" width=>BBLR</th>
+                              <th class="text-center" width=>Asfiksia</th>
+                              <th class="text-center" width=>Infeksi</th>
+                              <th class="text-center" width=>Tetanus Neonatorum</th>
+                              <th class="text-center" width=>Kelainan kongenital</th>
+                              <th class="text-center" width=>Covid-19</th>
+                              <th class="text-center" width=>Hipotiroid Kongenital</th>
+                              <th class="text-center" width=>Lain Lain</th>
+
+
+
+                              <th class="text-center" width=>Sasaran Balita Laki laki</th>
+                              <th class="text-center" width=>Sasaran Balita Perempuan</th>
+                              <th class="text-center" width=>Balita laki-laki memiliki buku KIA</th>
+                              <th class="text-center" width=>Balita perempuan memiliki buku KIA</th>
+                              <th class="text-center" width=>Balita laki-laki dipantau tumbuh kembang</th>
+                              <th class="text-center" width=>Balita Perempuan dipantau tumbuh kembang</th>
+                              <th class="text-center" width=>Balita laki-laki dengan gangguan perkembangan</th>
+                              <th class="text-center" width=>Balita Perempuan dengan gangguan perkembangan</th>
+                              <th class="text-center" width=>SDIDTK balita laki-laki</th>
+                              <th class="text-center" width=>SDIDTK balita perempuan</th>
+                              <th class="text-center" width=>Kunjungan balita sakit (laki-laki)</th>
+                              <th class="text-center" width=>Kunjungan balita sakit (Perempuan)</th>
+                              <th class="text-center" width=>MTBS laki-laki</th>
+                              <th class="text-center" width=>MTBS Perempuan</th>
+
+
+
+                              <th class="text-center" width=>Jumlah peserta kelas ibu hamil</th>
+                              <th class="text-center" width=>Jumlah peserta kelas ibu balita</th>
+
+
+
+                              <th class="text-center" width=>Dokter terlatih USG</th>
+                              <th class="text-center" width=>Kader terlatih pemantauan tumbuh kembang balita</th>
+                              <th class="text-center" width=>Nakes terlatih MTBS</th>
+                              <th class="text-center" width=>Nakes terlatih tata laksana gizi buruk</th>
+                              <th class="text-center" width=>Nakes terlatih PMBA</th>
+                              <th class="text-center" width=>Nakes terlatih SDIDTK</th>
+                              <th class="text-center" width=>Nakes terlatih integrasi MTBS-Gizi Buruk</th>
+                              <th class="text-center" width=>Nakes terlatih integrasi PMBA-SDIDTK</th>
+
+
+                              <th>(Mental) 0 Sampai 15</th>
+                              <th>(Mental) 16 Sampai 45</th>
+                              <th>(Mental) 46 Sampai 60</th>
+                              <th>(Mental) 60 Keatas</th>
+
+                              <th>(Fisik) 0 Sampai 15</th>
+                              <th>(Fisik) 16 Sampai 45</th>
+                              <th>(Fisik) 46 Sampai 60</th>
+                              <th>(Fisik) 60 Keatas</th>
+
+                              <th>(Emosional) 0 Sampai 15</th>
+                              <th>(Emosional) 16 Sampai 45</th>
+                              <th>(Emosional) 46 Sampai 60</th>
+                              <th>(Emosional) 60 Keatas</th>
+
+                              <th>(Penelantaran) 0 Sampai 15</th>
+                              <th>(Penelantaran) 16 Sampai 45</th>
+                              <th>(Penelantaran) 46 Sampai 60</th>
+                              <th>(Penelantaran) 60 Keatas</th>
+
+                              <th>(Penanganan) 0 Sampai 15</th>
+                              <th>(Penanganan) 16 Sampai 45</th>
+                              <th>(Penanganan) 46 Sampai 60</th>
+                              <th>(Penanganan) 60 Keatas</th>
+
+                              <th>Unmeet Need</th>
+                              <th>Kehamilan Diluar Nikah</th>
+                              <th>Kegagalan Kb</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                      </tbody>
+                      <tfoot>
                         <tr>
-                            <th>Nama Puskesmas</th>
-                            {{-- ibu hamil --}}
-                            <th  class="text-center">Jumlah Sasaran Ibu Hamil</th>
-                            <th class="text-center">K1 Total</th>
-                            <th class="text-center">K1 Murni</th>
-                            <th class="text-center">K4</th>
-                            <th class="text-center">K6</th>
-                            <th class="text-center">Ibu Hamil Terlalu Tua/Muda</th>
-                            <th class="text-center">Ibu hamil dengan jarak terlalu dekat</th>
-                            <th class="text-center">Ibu hamil dengan kehamilan terlalu banyak</th>
-                            <th class="text-center">K1 Oleh Dokter</th>
-                            <th class="text-center">K5 Oleh Dokter</th>
-                            <th class="text-center">K1 USG Oleh Dokter</th>
-                            <th class="text-center">K5 USG Oleh Dokter</th>
-                            <th class="text-center">Ibu hamil mempunyai buku KIA</th>
-
-
-
-                            <th class="text-center">Jumlah Sasaran Ibu Bersalin</th>
-                            <th class="text-center">Ibu Bersalin</th>
-                            <th class="text-center">Ibu Bersalin Nakes</th>
-                            <th class="text-center">Ibu bersalin faskes</th>
-                            <th class="text-center">KF1</th>
-                            <th class="text-center">KF Lengkap</th>
-                            <th class="text-center">Vit A Ibu Nifas</th>
-
-
-
-
-                            <th class="text-center">Anemia Trimester I</th>
-                            <th class="text-center">Anemia Trimester III</th>
-                            <th class="text-center">Pendarahan</th>
-                            <th class="text-center">Pre Eklamsia</th>
-                            <th class="text-center">Infeksi</th>
-                            <th class="text-center">Tuberculosis</th>
-                            <th class="text-center">Malaria</th>
-                            <th class="text-center">Jantung</th>
-                            <th class="text-center">Diabetes Mellitus</th>
-                            <th class="text-center">Obesitas</th>
-                            <th class="text-center">Covid19</th>
-                            <th class="text-center">Abortus</th>
-                            <th class="text-center">Lain Lain</th>
-
-
-
-                            <th class="text-center">Sasaran Bayi Laki Laki</th>
-                            <th class="text-center">Sasaran Bayi Perempuan</th>
-                            <th class="text-center">Bayi Lahir Laki Laki</th>
-                            <th class="text-center">Bayi Lahir Perempuan</th>
-                            <th class="text-center">KN1 Laki Laki</th>
-                            <th class="text-center">KN1 Perempuan</th>
-                            <th class="text-center">KN3 Laki Laki</th>
-                            <th class="text-center">KN3 Perempuan</th>
-                            <th class="text-center">BBL laki-laki diperiksa SHK</th>
-                            <th class="text-center">BBL perempuan diperiksa SHK</th>
-
-
-
-                            <th class="text-center">BBLR</th>
-                            <th class="text-center">Asfiksia</th>
-                            <th class="text-center">Infeksi</th>
-                            <th class="text-center">Tetanus Neonatorum</th>
-                            <th class="text-center">Kelainan kongenital</th>
-                            <th class="text-center">Covid-19</th>
-                            <th class="text-center">Hipotiroid Kongenital</th>
-                            <th class="text-center">Lain Lain</th>
-
-
-
-                            <th class="text-center">Sasaran Balita Laki laki</th>
-                            <th class="text-center">Sasaran Balita Perempuan</th>
-                            <th class="text-center">Balita laki-laki memiliki buku KIA</th>
-                            <th class="text-center">Balita perempuan memiliki buku KIA</th>
-                            <th class="text-center">Balita laki-laki dipantau tumbuh kembang</th>
-                            <th class="text-center">Balita Perempuan dipantau tumbuh kembang</th>
-                            <th class="text-center">Balita laki-laki dengan gangguan perkembangan</th>
-                            <th class="text-center">Balita Perempuan dengan gangguan perkembangan</th>
-                            <th class="text-center">SDIDTK balita laki-laki</th>
-                            <th class="text-center">SDIDTK balita perempuan</th>
-                            <th class="text-center">Kunjungan balita sakit (laki-laki)</th>
-                            <th class="text-center">Kunjungan balita sakit (Perempuan)</th>
-                            <th class="text-center">MTBS laki-laki</th>
-                            <th class="text-center">MTBS Perempuan</th>
-
-
-
-                            <th class="text-center">Jumlah peserta kelas ibu hamil</th>
-                            <th class="text-center">Jumlah peserta kelas ibu balita</th>
-
-
-
-                            <th class="text-center">Dokter terlatih USG</th>
-                            <th class="text-center">Kader terlatih pemantauan tumbuh kembang balita</th>
-                            <th class="text-center">Nakes terlatih MTBS</th>
-                            <th class="text-center">Nakes terlatih tata laksana gizi buruk</th>
-                            <th class="text-center">Nakes terlatih PMBA</th>
-                            <th class="text-center">Nakes terlatih SDIDTK</th>
-                            <th class="text-center">Nakes terlatih integrasi MTBS-Gizi Buruk</th>
-                            <th class="text-center">Nakes terlatih integrasi PMBA-SDIDTK</th>
+                            <td class="text-center" width=>Total</td>
+                            @for($i = 1; $i < 99; $i++)
+                            <td class="text-center" width=>{{$i}}</td>
+                            @endfor
                         </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th class="text-center">Total</th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                        </tr>
-                    </tfoot>
-                </table>
-              </div>
-            </section>
-
+                      </tfoot>
+                  </table>
+                </div>
+              </section>
 
         </div>
     </div>
@@ -288,17 +268,85 @@
   <script>
 
      $(document).ready(function () {
+     $("#bulan").css("display", "none");
+     let select2Type = $('#select2Type');
+     select2Type.select2({
+        dropdownParent:select2Type.parent(),
+        searchInputPlaceholder: 'Cari',
+        width: '100%',
+        placeholder: 'select Type'
+      }).on('select2:select', function (e) {
+            let data = e.params.data;
+            cek(data.id);
+      });
 
-        $('#tahun').flatpickr({
-       disableMobile: "true",
-       plugins: [
-           new monthSelectPlugin({
-           shorthand: true,
-           dateFormat: "Y",
-           theme: "dark"
-           })
-       ]
-    });
+
+
+
+    let select2Bulan = $('#select2Bulan');
+     select2Bulan.select2({
+        dropdownParent:select2Bulan.parent(),
+        searchInputPlaceholder: 'Cari',
+        width: '100%',
+        placeholder: 'select bulan',
+        ajax: {
+          url: "{{ route('datepicker.index') }}",
+          dataType: "json",
+          cache: true,
+          data: function (e) {
+            return {
+              type : 'bulan',
+              q: e.term || '',
+              page: e.page || 1
+            }
+          },
+        },
+      }).on('select2:select', function (e) {
+            let data = e.params.data;
+            console.log(data.id);
+      });
+
+      let select2Tahun = $('#select2Tahun');
+     select2Tahun.select2({
+        dropdownParent:select2Tahun.parent(),
+        searchInputPlaceholder: 'Cari',
+        width: '100%',
+        placeholder: 'select Tahun',
+        ajax: {
+          url: "{{ route('datepicker.index') }}",
+          dataType: "json",
+          cache: true,
+          data: function (e) {
+            return {
+              type : 'tahun',
+              q: e.term || '',
+              page: e.page || 1
+            }
+          },
+        },
+      }).on('select2:select', function (e) {
+            let data = e.params.data;
+            console.log(data.id);
+      });
+
+      function cek(res){
+
+        if(res == 'year'){
+            console.log(res);
+            $("#bulan").css("display", "none");
+        }
+
+        if(res == 'month'){
+            console.log(res);
+            $("#bulan").css("display", "block");
+        }
+
+        if(res != 'month' && res != 'year'){
+            $("#bulan").css("display", "none");
+        }
+        select2Bulan.val('').trigger('change');
+        select2Tahun.val('').trigger('change');
+    }
 
     let select2Puskesmas = $('#select2Puskesmas');
       select2Puskesmas.select2({
@@ -322,8 +370,13 @@
             let data = e.params.data;
             console.log(data.id);
       });
-   let dataTable = $('#Datatable').DataTable({
-    dom: 'Bfrtip',
+        const numbersArray = [];
+        for (let i = 1; i <= 98; i++) {
+          numbersArray.push(i);
+        }
+        console.log( numbersArray);
+      let dataTable = $('#Datatable').DataTable({
+        dom: 'Bfrtip',
         buttons: [
 
             { extend: 'excelHtml5', footer: true },
@@ -337,7 +390,7 @@
                    i : 0;
        };
 
-       for (var i=1; i<=75; i++) {
+       for (var i=1; i<=98; i++) {
            var colum = 'col'+ i;
            var colum = api
                .column( i )
@@ -364,7 +417,9 @@
        url: "{{ route('backend.laporan.datatable') }}",
        data: function (d) {
            d.updt_puskesmas_id =  select2Puskesmas.val();
-           d.tahun = $('#tahun').val();
+           d.tahun =  select2Tahun.find(':selected').val();
+           d.bulan =  select2Bulan.find(':selected').val();
+           d.type =   $('#select2Type').find(':selected').val();
        }
        },
        columns: [
@@ -396,8 +451,8 @@
        // //rtk
        {data: 'lb3rtk_sum_anemia_trimester1', name: 'lb3rtk_sum_anemia_trimester1'},
        {data: 'lb3rtk_sum_anemia_trimester3', name: 'lb3rtk_sum_anemia_trimester3'},
-       {data: 'lb3rtk_sum_anemia_pendarahan', name: 'lb3rtk_sum_anemia_pendarahan'},
-       {data: 'lb3rtk_sum_pre_aklamsia', name: 'lb3rtk_sum_pre_eklamsia'},
+       {data: 'lb3rtk_sum_pendarahan', name: 'lb3rtk_sum_pendarahan'},
+       {data: 'lb3rtk_sum_pre_eklamsia', name: 'lb3rtk_sum_pre_eklamsia'},
        {data: 'lb3rtk_sum_infeksi', name: 'lb3rtk_sum_infeksi'},
        {data: 'lb3rtk_sum_tuberculosis', name: 'lb3rtk_sum_tuberculosis'},
        {data: 'lb3rtk_sum_malaria', name: 'lb3rtk_sum_malaria'},
@@ -421,7 +476,7 @@
 
        {data: 'lb3brtk_sum_bblr', name: 'lb3brtk_sum_bblr'},
        {data: 'lb3brtk_sum_asfiksia', name: 'lb3brtk_sum_asfiksia'},
-       {data: 'lb3brtk_sum_infeksik', name: 'lb3brtk_sum_infeksi'},
+       {data: 'lb3brtk_sum_infeksi', name: 'lb3brtk_sum_infeksi'},
        {data: 'lb3brtk_sum_tetanus', name: 'lb3brtk_sum_tetanus'},
        {data: 'lb3brtk_sum_kelainan', name: 'lb3brtk_sum_kelainan'},
        {data: 'lb3brtk_sum_covid19', name: 'lb3brtk_sum_covid19'},
@@ -446,7 +501,7 @@
        {data: 'lki_sum_jpkih', name: 'lki_sum_jpkih'},
        {data: 'lki_sum_jpkib', name: 'lki_sum_jpkib'},
 
-       {data: 'lbtt_sum_lbtt_sum_dokter_terlatih_usg', name: 'lbtt_sum_dokter_terlatih_usg'},
+       {data: 'lbtt_sum_dokter_terlatih_usg', name: 'lbtt_sum_dokter_terlatih_usg'},
        {data: 'lbtt_sum_kader_terlatih_ptkb', name: 'lbtt_sum_kader_terlatih_ptkb'},
        {data: 'lbtt_sum_nakes_terlatih_mbts', name: 'lbtt_sum_nakes_terlatih_mbts'},
        {data: 'lbtt_sum_nakes_terlatih_tlgb', name: 'lbtt_sum_nakes_terlatih_tlgb'},
@@ -454,37 +509,64 @@
        {data: 'lbtt_sum_nakes_terlatih_sdidtk', name: 'lbtt_sum_nakes_terlatih_sdidtk'},
        {data: 'lbtt_sum_nakes_terlatih_imtbsgb', name: 'lbtt_sum_nakes_terlatih_imtbsgb'},
        {data: 'lbtt_sum_nakes_terlatih_pmba_sdidtk', name: 'lbtt_sum_nakes_terlatih_pmba_sdidtk'},
+
+       {data: 'Mental_0_15', name: 'Mental_0_15'},
+       {data: 'Mental_16_45', name: 'Mental_16_45'},
+       {data: 'Mental_46_60', name: 'Mental_46_60'},
+       {data: 'Mental_60', name: 'Mental_60'},
+
+       {data: 'Fisik_0_15', name: 'Fisik_0_15'},
+       {data: 'Fisik_16_45', name: 'Fisik_16_45'},
+       {data: 'Fisik_46_60', name: 'Fisik_46_60'},
+       {data: 'Fisik_60', name: 'Fisik_60'},
+
+       {data: 'Emosional_0_15', name: 'Emosional_0_15'},
+       {data: 'Emosional_16_45', name: 'Emosional_16_45'},
+       {data: 'Emosional_46_60', name: 'Emosional_46_60'},
+       {data: 'Emosional_60', name: 'Emosional_60'},
+
+       {data: 'Penelantaran_0_15', name: 'Penelantaran_0_15'},
+       {data: 'Penelantaran_16_45', name: 'Penelantaran_16_45'},
+       {data: 'Penelantaran_46_60', name: 'Penelantaran_46_60'},
+       {data: 'Penelantaran_60', name: 'Penelantaran_60'},
+
+       {data: 'Penanganan_0_15', name: 'Penanganan_0_15'},
+       {data: 'Penanganan_16_45', name: 'Penanganan_16_45'},
+       {data: 'Penanganan_46_60', name: 'Penanganan_46_60'},
+       {data: 'Penanganan_60', name: 'Penanganan_60'},
+
+
+       {data: 'lb3kytd_sum_unmet_need', name: 'lb3kytd_sum_unmet_need'},
+       {data: 'lb3kytd_sum_kehamilan_diluar_nikah', name: 'lb3kytd_sum_kehamilan_diluar_nikah'},
+       {data: 'lb3kytd_sum_kegagalan_kb', name: 'lb3kytd_sum_kegagalan_kb'},
+
        ],
        columnDefs: [
            {
                targets: '_all',
                defaultContent: 0,
-
            },
            {
-               className: 'text-center',
-            width:"10px", orderable: false,
+             className: 'text-center',
+             width:"10px", orderable: false,
              searchable: false,
-               targets: [1, 2, 3 , 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 37, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 43, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75],
+             targets: numbersArray,
            },
        ],
    });
-
 $("#terapkan_filter").click(function() {
    dataTable.draw();
    // get_saldo();
  });
 
 
- var id =$('#user_puskes_id').val();
- var name =$('#user_puskes_name').val();
- if(id != ''){
-    loadsupplier(id, name);
- }
-
+        var id =$('#user_puskes_id').val();
+        var name =$('#user_puskes_name').val();
+        if(id != ''){
+            loadsupplier(id, name);
+        }
 
         function loadsupplier(id, name){
-
             var option = new Option(name, id, true, true);
             $('#select2Puskesmas').append(option).trigger('change');
             dataTable.draw();

@@ -4,7 +4,7 @@
 <div class="card bg-light-info shadow-none position-relative overflow-hidden">
     <div class="row row-sm">
         <div class="col-lg-12 col-md-12">
-            <form id="formStore" action="{{ route('backend.lbtt.store') }}" autocomplete="off">
+            <form id="formStore" action="{{ route('backend.lb3jktpda.store') }}" autocomplete="off">
                 @csrf
                 <div class="card-header">
                     <div id="errorCreate" class="mb-3" style="display:none;">
@@ -29,65 +29,39 @@
                             <div class="mb-3">
                                 <label for="Nama">Tahun<span class="text-danger">*</span></label>
                                   <select id="select2Datepicker" style="width: 100% !important;" name="tanggal">
-                                  </select>
+                                  </select
+                                  >
+                                {{-- <input type="number" value="{{ \Carbon\Carbon::now()->startOfYear()->format('Y') }}" class="form-control" placeholder="Pilih Tahun" id="tahun" name="tahun"> --}}
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-2"></div>
-                        <div class="col-8">
-                            <div class="d-flex flex-column">
 
-                                <div class="mb-3">
-                                    <label for="Nama">Dokter terlatih USG<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="dokter_terlatih_usg">
-                                </div>
+                        <section class="datatables">
+                            <div class="table-responsive">
+                              <table id="DatatableDetail" class="table table-bordered" style="width:100%">
+                                  <thead>
+                                      <tr>
+                                          <th>Jenis</th>
+                                          <th>0 sampai 15</th>
+                                          <th>16 sampai 45</th>
+                                          <th>46 sampai 60</th>
+                                          <th>60 Keatas</th>
+                                        </tr>
+                                  </thead>
+                                  <tbody>
 
-                                <div class="mb-3">
-                                    <label for="Nama">Kader terlatih pemantauan tumbuh kembang balita<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="kader_terlatih_ptkb">
-                                </div>
+                                  </tbody>
+                              </table>
+                            </div>
+                        </section>
 
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih MTBS<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_mbts">
-                                </div>
-
-
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih tata laksana gizi buruk<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_tlgb">
-                                </div>
-
-
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih PMBA<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_pmba">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih SDIDTK<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_sdidtk">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih integrasi MTBS-Gizi Buruk<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_imtbsgb">
-                                </div>
-
-
-
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih integrasi PMBA-SDIDTK<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_pmba_sdidtk">
-                                </div>
-
-
-
-                              </div>
+                        <div class="mb-3">
+                            <label for="Nama">Ketarangan<span class="text-danger">*</span></label>
+                            <textarea class="form-control" value="-"  name="keterangan"></textarea>
                         </div>
-                        <div class="col-2"></div>
+
                     </div>
                 </div>
                 <div class="card-footer">
@@ -111,7 +85,101 @@
   <script>
     $(document).ready(function () {
 
-     let select2Datepicker = $('#select2Datepicker');
+        var dummy = [
+             {  'name': 'Mental', '0_sampai_15' : '','16_sampai_45' : '', '46_sampai_60' : '', '60_keatas' : '' },
+             {  'name': 'Fisik', '0_sampai_15' : '','16_sampai_45' : '', '46_sampai_60' : '', '60_keatas' : '' },
+             {  'name': 'Emosional', '0_sampai_15' : '','16_sampai_45' : '', '46_sampai_60' : '', '60_keatas' : '' },
+             {  'name': 'Penelantaran', '0_sampai_15' : '','16_sampai_45' : '', '46_sampai_60' : '', '60_keatas' : '' },
+             {  'name': 'Penanganan', '0_sampai_15' : '','16_sampai_45' : '', '46_sampai_60' : '', '60_keatas' : '' },
+        ]
+        const tableDetail = $('#DatatableDetail').DataTable({
+            // responsive: true,
+			paging		: false,
+			searching 	: false,
+			ordering 	: false,
+			info 		: false,
+			data 		: dummy ,
+			columns : [
+                {
+					data 		: 'name',
+					className 	: 'text-left',
+                    width 		: '20%',
+					render 		: function ( columnData, type, rowData, meta ) {
+                        return String(`
+                            <input type="text" class="form-control" value="`+ columnData +`" style="background-color:#ebf3fe" readonly name="detail[`+ meta.row +`][name]"">
+						`).trim();
+					}
+				},
+                {
+					data 		: '0_sampai_15',
+					className 	: 'text-center',
+                    width 		: '20%',
+					render 		: function ( columnData, type, rowData, meta ) {
+                        return String(`
+                            <input type="number" min="0" max="15" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][0_sampai_15]"">
+						`).trim();
+					}
+				},
+				{
+					data 		: '16_sampai_45',
+					className 	: 'text-right',
+                    width 		: '20%',
+					render 		: function ( columnData, type, rowData, meta ) {
+                        return String(`
+                            <input type="number" min="16" max="45" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][16_sampai_45]"">
+						`).trim();
+					}
+				},
+                {
+					data 		: '46_sampai_60',
+					className 	: 'text-right',
+                    width 		: '20%',
+					render 		: function ( columnData, type, rowData, meta ) {
+                        return String(`
+                            <input type="number" min="16" max="45" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][46_sampai_60]"">
+						`).trim();
+					}
+				},
+                {
+					data 		: '60_keatas',
+					className 	: 'text-right',
+                    width 		: '20%',
+					render 		: function ( columnData, type, rowData, meta ) {
+                        return String(`
+                            <input type="number" min="60" class="form-control" value="`+ columnData +`" name="detail[`+ meta.row +`][60_keatas]"">
+						`).trim();
+					}
+				},
+
+
+			],
+			initComplete : function(settings, json){
+				let api = this.api()
+			},
+			createdRow : function( row, data, index ){
+
+			},
+			rowCallback : function( row, data, displayNum, displayIndex, index ){
+				let api = this.api();
+
+
+			},
+			drawCallback : function( settings ){
+
+			}
+	    });
+
+     let select2Type = $('.select2Type');
+     select2Type.select2({
+        dropdownParent:select2Type.parent(),
+        searchInputPlaceholder: 'Cari',
+        width: '100%',
+        placeholder: ''
+      }).on('select2:select', function (e) {
+      });
+
+
+        let select2Datepicker = $('#select2Datepicker');
      select2Datepicker.select2({
         dropdownParent:select2Datepicker.parent(),
         searchInputPlaceholder: 'Cari',
@@ -133,7 +201,6 @@
             let data = e.params.data;
             console.log(data.id);
       });
-
 
          let select2Puskesmas = $('#select2Puskesmas');
       select2Puskesmas.select2({
@@ -157,6 +224,8 @@
             let data = e.params.data;
             console.log(data.id);
       });
+
+
 
 
 

@@ -62,6 +62,20 @@ class Puskesmas extends Model
         return $this->hasMany(Lbtt::class);
     }
 
+    public function lb3jktpda()
+    {
+        return $this->hasMany(Lb3Jktpda::class);
+    }
+    public function lb3jktpdadetail()
+    {
+        return $this->hasMany(Lb3JktpdaDetail::class);
+    }
+
+    public function lb3kytd()
+    {
+        return $this->hasMany(Lb3Kytd::class);
+    }
+
     public function users()
     {
       return $this->belongsToMany(User::class);

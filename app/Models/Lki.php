@@ -9,7 +9,7 @@ class Lki extends Model
 {
     protected $table = 'lki';
     protected $fillable = [
-      'tahun',
+      'tanggal',
       'puskesmas_id',
       'jpkih',
       'jpkib',

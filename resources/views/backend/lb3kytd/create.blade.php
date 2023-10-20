@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="card bg-light-info shadow-none position-relative overflow-hidden">
-    <div class="row row-sm">
+    <div class="row">
         <div class="col-lg-12 col-md-12">
-            <form id="formStore" action="{{ route('backend.lbtt.store') }}" autocomplete="off">
+            <form id="formStore" action="{{ route('backend.lb3kytd.store') }}" autocomplete="off">
                 @csrf
                 <div class="card-header">
                     <div id="errorCreate" class="mb-3" style="display:none;">
@@ -30,6 +30,7 @@
                                 <label for="Nama">Tahun<span class="text-danger">*</span></label>
                                   <select id="select2Datepicker" style="width: 100% !important;" name="tanggal">
                                   </select>
+                                {{-- <input type="number" value="{{ \Carbon\Carbon::now()->startOfYear()->format('Y') }}" class="form-control" placeholder="Pilih Tahun" id="tahun" name="tahun"> --}}
                             </div>
                         </div>
                     </div>
@@ -40,51 +41,21 @@
                             <div class="d-flex flex-column">
 
                                 <div class="mb-3">
-                                    <label for="Nama">Dokter terlatih USG<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="dokter_terlatih_usg">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="Nama">Kader terlatih pemantauan tumbuh kembang balita<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="kader_terlatih_ptkb">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih MTBS<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_mbts">
+                                    <label for="Nama">Unmeed Need<span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control"  name="unmet_need">
                                 </div>
 
 
                                 <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih tata laksana gizi buruk<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_tlgb">
+                                    <label for="Nama">Kehamilan Di Luar Nikah<span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control"  name="kehamilan_diluar_nikah">
                                 </div>
 
 
                                 <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih PMBA<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_pmba">
+                                    <label for="Nama">Kegagalan KB<span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control"  name="kegagalan_kb">
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih SDIDTK<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_sdidtk">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih integrasi MTBS-Gizi Buruk<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_imtbsgb">
-                                </div>
-
-
-
-                                <div class="mb-3">
-                                    <label for="Nama">Nakes terlatih integrasi PMBA-SDIDTK<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control"  name="nakes_terlatih_pmba_sdidtk">
-                                </div>
-
-
-
                               </div>
                         </div>
                         <div class="col-2"></div>
@@ -102,7 +73,7 @@
         </div>
     </div>
 
-  </div>
+</div>
 @endsection
 
 @section('css')
@@ -111,29 +82,16 @@
   <script>
     $(document).ready(function () {
 
-     let select2Datepicker = $('#select2Datepicker');
-     select2Datepicker.select2({
-        dropdownParent:select2Datepicker.parent(),
-        searchInputPlaceholder: 'Cari',
-        width: '100%',
-        placeholder: 'select bulan Tahun',
-        ajax: {
-          url: "{{ route('datepicker.index') }}",
-          dataType: "json",
-          cache: true,
-          data: function (e) {
-            return {
-            //   id : $('#user_puskes_id').val(),
-              q: e.term || '',
-              page: e.page || 1
-            }
-          },
-        },
-      }).on('select2:select', function (e) {
-            let data = e.params.data;
-            console.log(data.id);
-      });
-
+        // $('#tahun').flatpickr({
+        //     disableMobile: "true",
+        //     plugins: [
+        //         new monthSelectPlugin({
+        //         shorthand: true,
+        //         dateFormat: "Y",
+        //         theme: "dark"
+        //         })
+        //     ]
+        //  });
 
          let select2Puskesmas = $('#select2Puskesmas');
       select2Puskesmas.select2({
@@ -157,6 +115,32 @@
             let data = e.params.data;
             console.log(data.id);
       });
+
+
+
+      let select2Datepicker = $('#select2Datepicker');
+     select2Datepicker.select2({
+        dropdownParent:select2Datepicker.parent(),
+        searchInputPlaceholder: 'Cari',
+        width: '100%',
+        placeholder: 'select bulan Tahun',
+        ajax: {
+          url: "{{ route('datepicker.index') }}",
+          dataType: "json",
+          cache: true,
+          data: function (e) {
+            return {
+            //   id : $('#user_puskes_id').val(),
+              q: e.term || '',
+              page: e.page || 1
+            }
+          },
+        },
+      }).on('select2:select', function (e) {
+            let data = e.params.data;
+            console.log(data.id);
+      });
+
 
 
 

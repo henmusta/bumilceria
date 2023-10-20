@@ -19442,7 +19442,7 @@ progress {
   font-weight: 400;
   line-height: 1.5;
   color: #5a6a85;
-  background-color: transparent;
+  background-color: white;
   background-clip: padding-box;
   border: var(--bs-border-width) solid #dfe5ef;
   appearance: none;
@@ -39169,8 +39169,8 @@ body
   line-height: 40px;
 }
 .select2-container--default .select2-selection--multiple {
-  line-height: 27px;
-  height: auto;
+  line-height: 25px;
+  height: 40px;
 }
 .select2-container--classic
   .select2-selection--multiple

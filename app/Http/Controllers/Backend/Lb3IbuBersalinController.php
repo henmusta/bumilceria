@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lb3ibubersalin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -24,6 +25,9 @@ class Lb3IbuBersalinController extends Controller
 
       if ($request->ajax()) {
         $data = Lb3ibubersalin::selectRaw('lb3_ibu_bersalin.*')->with('puskesmas');
+        if ($request->filled('puskesmas_id')) {
+            $data->where('puskesmas_id',  $request['puskesmas_id']);
+        }
         return DataTables::of($data)
           ->addIndexColumn()
           ->addColumn('action', function ($row) {
@@ -40,7 +44,10 @@ class Lb3IbuBersalinController extends Controller
                   </div>';
 
           })
-          ->rawColumns(['action'])
+          ->addColumn('tanggal', function ($row) {
+            return Carbon::parse($row->tanggal)->isoFormat('MMMM YYYY');
+          })
+          ->rawColumns(['action', 'tanggal'])
           ->make(true);
       }
       return view('backend.lb3ibubersalin.index', compact('config', 'page_breadcrumbs'));
@@ -61,7 +68,7 @@ class Lb3IbuBersalinController extends Controller
     public function store(Request $request)
     {
           $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'jsib' => 'required',
             'ibu_bersalin' => 'required',
@@ -76,8 +83,9 @@ class Lb3IbuBersalinController extends Controller
 
             DB::beginTransaction();
             try {
-                 $data = Lb3ibubersalin::create([
-                    'tahun' =>  $request['tahun'],
+                $cek = ['tanggal'=> $request['tanggal'],  'puskesmas_id' =>  $request['updt_puskesmas_id']];
+                 $data = Lb3ibubersalin::updateOrCreate($cek,[
+                    'tanggal' =>  $request['tanggal'],
                     'puskesmas_id' =>  $request['updt_puskesmas_id'],
                     'jsib' =>  $request['jsib'],
                     'ibu_bersalin' =>  $request['ibu_bersalin'],
@@ -140,7 +148,7 @@ class Lb3IbuBersalinController extends Controller
     public function update(Request $request, $id)
     {
           $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'jsib' => 'required',
             'ibu_bersalin' => 'required',
@@ -153,21 +161,36 @@ class Lb3IbuBersalinController extends Controller
           if ($validator->passes()) {
             DB::beginTransaction();
             try {
-                $data = Lb3ibubersalin::find($id);
-                $data->update([
-                    'tahun' =>  $request['tahun'],
-                    'puskesmas_id' =>  $request['updt_puskesmas_id'],
-                    'jsib' =>  $request['jsib'],
-                    'ibu_bersalin' =>  $request['ibu_bersalin'],
-                    'ibu_bersalin_nakes' =>  $request['ibu_bersalin_nakes'],
-                    'ibu_bersalin_faskes' =>  $request['ibu_bersalin_faskes'],
-                    'kf1' =>  $request['kf1'],
-                    'kf_lengkap' =>  $request['kf_lengkap'],
-                    'vita_ibu_nifas'=>  $request['vita_ibu_nifas'],
-                ]);
+
+                $cek_uniqe =  Lb3ibubersalin::where([
+                    ['tanggal' ,  $request['tanggal']],
+                    ['puskesmas_id' ,  $request['updt_puskesmas_id']],
+                    ['id' , '!=' , $id]
+                 ])->first();
+                 if(isset($cek_uniqe)){
+                    $response = response()->json([
+                        'error' => true,
+                        'message' => 'Data Tanggal Dan Kecamatan Yang Sama Telah Ada Sebelumnya',
+                    ]);
+                 }else{
+                    $data = Lb3Ibubersalin::findOrFail($id);
+                    $data->update([
+                        'tanggal' =>  $request['tanggal'],
+                        'puskesmas_id' =>  $request['updt_puskesmas_id'],
+                        'jsib' =>  $request['jsib'],
+                        'ibu_bersalin' =>  $request['ibu_bersalin'],
+                        'ibu_bersalin_nakes' =>  $request['ibu_bersalin_nakes'],
+                        'ibu_bersalin_faskes' =>  $request['ibu_bersalin_faskes'],
+                        'kf1' =>  $request['kf1'],
+                        'kf_lengkap' =>  $request['kf_lengkap'],
+                        'vita_ibu_nifas'=>  $request['vita_ibu_nifas'],
+                    ]);
+                    $response = response()->json($this->responseStore(true, route('backend.lb3ibubersalin.index')));
+                 }
+
 
                 DB::commit();
-                $response = response()->json($this->responseStore(true, route('backend.lb3ibubersalin.index')));
+
             } catch (Throwable $throw) {
                 dd($throw);
                 DB::rollBack();

@@ -9,7 +9,7 @@ class Lb3Rtk extends Model
 {
     protected $table = 'lb3_rtk';
     protected $fillable = [
-      'tahun',
+      'tanggal',
       'puskesmas_id',
       'anemia_trimester1',
       'anemia_trimester3',

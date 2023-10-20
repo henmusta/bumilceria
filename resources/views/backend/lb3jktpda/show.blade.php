@@ -13,27 +13,40 @@
 
          <table width="100%">
             <tr>
-              <td style="width: 50%; font-weight: bold; font-size: 12px; text-align: left"> Data Laporan Kelas Ibu - {{$data['lki']['puskesmas']['name']}} - {{$data['lki']['tanggal']->isoFormat('MMMM YYYY')}}</td>
-              <td style="width: 50%; font-weight: normal; text-align: right">  Tanggal Buat : {{ \Carbon\Carbon::parse($data['lki']['created_at'])->isoFormat('dddd, D MMMM Y')}}</td>
+              <td style="width: 50%; font-weight: bold; font-size: 12px; text-align: left"> Data LB3 Jenis Kekerasan Pada Anak Dan Perempuan - {{$data['lb3jktpda']['puskesmas']['name']}} - {{$data['lb3jktpda']['tanggal']}}</td>
+              <td style="width: 50%; font-weight: normal; text-align: right">  Tanggal Buat : {{ \Carbon\Carbon::parse($data['lb3jktpda']['created_at'])->isoFormat('dddd, D MMMM Y')}}</td>
             </tr>
           </table><br><br>
         <div class="row" style="padding-top:10px;">
             <div class="col-12">
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="width:100%">
                     <thead>
-                        <tr class="">
-                            <th class="text-left" width="50%">Jumlah peserta kelas ibu hamil</th>
-                            <td class="text-left">{{ $data['lki']['jpkih'] }}</td>
-                        </tr>
-                        <tr class="">
-                            <th class="text-left" width="50%">Jumlah peserta kelas ibu balita<p style="font-size:10px;">Jumlah Sasaran Bayi Perempuan</p></th>
-                            <td class="text-left">{{ $data['lki']['jpkib'] }}</td>
-                        </tr>
-
+                        <tr>
+                            <th>Jenis</th>
+                            <th>0 sampai 15</th>
+                            <th>16 sampai 45</th>
+                            <th>46 sampai 60</th>
+                            <th>60 Keatas</th>
+                          </tr>
                     </thead>
                     <tbody>
+
+                        @foreach ($data['lb3jktpdadetail'] as $val)
+                            <tr>
+                                <td>{{$val->name}}</td>
+                                <td class="text-center">{{$val['0_sampai_15']}}</td>
+                                <td class="text-center">{{$val['16_sampai_45']}}</td>
+                                <td class="text-center">{{$val['46_sampai_60']}}</td>
+                                <td class="text-center">{{$val['60_keatas']}}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
+
+            </div>
+            <div class="mb-3">
+                <label for="Nama">Ketarangan<span class="text-danger">*</span></label>
+                <textarea class="form-control" value="{{$data['lb3jktpda']['keterangan']}}"  name="keterangan"></textarea>
             </div>
         </div>
 

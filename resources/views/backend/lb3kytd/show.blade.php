@@ -13,8 +13,8 @@
 
          <table width="100%">
             <tr>
-              <td style="width: 50%; font-weight: bold; font-size: 12px; text-align: left"> Data Laporan Kelas Ibu - {{$data['lki']['puskesmas']['name']}} - {{$data['lki']['tanggal']->isoFormat('MMMM YYYY')}}</td>
-              <td style="width: 50%; font-weight: normal; text-align: right">  Tanggal Buat : {{ \Carbon\Carbon::parse($data['lki']['created_at'])->isoFormat('dddd, D MMMM Y')}}</td>
+              <td style="width: 50%; font-weight: bold; font-size: 12px; text-align: left"> Data Lb3 Ibu Hamil - {{$data['lb3kytd']['puskesmas']['name']}} - {{ \Carbon\Carbon::parse($data['lb3kytd']['tanggal'])->isoFormat('MMMM YYYY')}}</td>
+              <td style="width: 50%; font-weight: normal; text-align: right">  Tanggal Buat : {{ \Carbon\Carbon::parse($data['lb3kytd']['created_at'])->isoFormat('dddd, D MMMM Y')}}</td>
             </tr>
           </table><br><br>
         <div class="row" style="padding-top:10px;">
@@ -22,12 +22,16 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr class="">
-                            <th class="text-left" width="50%">Jumlah peserta kelas ibu hamil</th>
-                            <td class="text-left">{{ $data['lki']['jpkih'] }}</td>
+                            <th class="text-left" width="50%">Unmet Need</th>
+                            <td class="text-left">{{ $data['lb3kytd']['unmet_need'] }}</td>
                         </tr>
                         <tr class="">
-                            <th class="text-left" width="50%">Jumlah peserta kelas ibu balita<p style="font-size:10px;">Jumlah Sasaran Bayi Perempuan</p></th>
-                            <td class="text-left">{{ $data['lki']['jpkib'] }}</td>
+                            <th class="text-left" width="50%">Kehamilan Diluar Nikah</th>
+                            <td class="text-left">{{ $data['lb3kytd']['kehamilan_diluar_nikah'] }}</td>
+                        </tr>
+                        <tr class="">
+                            <th class="text-left" width="50%">Kegagalan Kb</th>
+                            <td class="text-left">{{ $data['lb3kytd']['kegagalan_kb'] }}</td>
                         </tr>
 
                     </thead>

@@ -10,7 +10,7 @@ class Lb3Bayi extends Model
     use HasFactory;
     protected $table = 'lb3_bayi';
     protected $fillable = [
-      'tahun',
+      'tanggal',
       'puskesmas_id',
       'sasaran_bayi_laki_laki',
       'sasaran_bayi_perempuan',

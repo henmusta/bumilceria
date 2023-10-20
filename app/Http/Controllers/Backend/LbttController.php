@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Lbtt;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -24,6 +25,9 @@ class LbttController extends Controller
 
       if ($request->ajax()) {
         $data = Lbtt::selectRaw('lbtt.*')->with('puskesmas');
+        if ($request->filled('puskesmas_id')) {
+            $data->where('puskesmas_id',  $request['puskesmas_id']);
+        }
         return DataTables::of($data)
           ->addIndexColumn()
           ->addColumn('action', function ($row) {
@@ -40,7 +44,10 @@ class LbttController extends Controller
                   </div>';
 
           })
-          ->rawColumns(['action'])
+          ->addColumn('tanggal', function ($row) {
+            return Carbon::parse($row->tanggal)->isoFormat('MMMM YYYY');
+          })
+          ->rawColumns(['action', 'tanggal'])
           ->make(true);
       }
       return view('backend.lbtt.index', compact('config', 'page_breadcrumbs'));
@@ -61,7 +68,7 @@ class LbttController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'dokter_terlatih_usg'=> 'required',
             'kader_terlatih_ptkb'=> 'required',
@@ -71,15 +78,15 @@ class LbttController extends Controller
             'nakes_terlatih_sdidtk'=> 'required',
             'nakes_terlatih_imtbsgb'=> 'required',
             'nakes_terlatih_pmba_sdidtk' => 'required',
-
           ]);
 
           if ($validator->passes()) {
 
             DB::beginTransaction();
             try {
-                 $data = Lbtt::create([
-                    'tahun' =>  $request['tahun'],
+                $cek = ['tanggal'=> $request['tanggal'],  'puskesmas_id' =>  $request['updt_puskesmas_id']];
+                $data = Lbtt::updateOrCreate($cek,[
+                    'tanggal' =>  $request['tanggal'],
                     'puskesmas_id' =>  $request['updt_puskesmas_id'],
                     'dokter_terlatih_usg'=>  $request['dokter_terlatih_usg'],
                     'kader_terlatih_ptkb'=>  $request['kader_terlatih_ptkb'],
@@ -141,7 +148,7 @@ class LbttController extends Controller
     public function update(Request $request, $id)
     {
           $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'dokter_terlatih_usg'=> 'required',
             'kader_terlatih_ptkb'=> 'required',
@@ -155,22 +162,34 @@ class LbttController extends Controller
           if ($validator->passes()) {
             DB::beginTransaction();
             try {
-                $data = Lbtt::find($id);
-                $data->update([
-                    'tahun' =>  $request['tahun'],
-                    'puskesmas_id' =>  $request['updt_puskesmas_id'],
-                    'dokter_terlatih_usg'=>  $request['dokter_terlatih_usg'],
-                    'kader_terlatih_ptkb'=>  $request['kader_terlatih_ptkb'],
-                    'nakes_terlatih_mbts'=>  $request['nakes_terlatih_mbts'],
-                    'nakes_terlatih_tlgb'=>  $request['nakes_terlatih_tlgb'],
-                    'nakes_terlatih_pmba'=>  $request['nakes_terlatih_pmba'],
-                    'nakes_terlatih_sdidtk'=>  $request['nakes_terlatih_sdidtk'],
-                    'nakes_terlatih_imtbsgb'=>  $request['nakes_terlatih_imtbsgb'],
-                    'nakes_terlatih_pmba_sdidtk' =>  $request['nakes_terlatih_pmba_sdidtk'],
-                ]);
+                 $cek_uniqe = Lbtt::where([
+                    ['tanggal' ,  $request['tanggal']],
+                    ['puskesmas_id' ,  $request['updt_puskesmas_id']],
+                    ['id' , '!=' , $id]
+                 ])->first();
+                 if(isset($cek_uniqe)){
+                    $response = response()->json([
+                        'error' => true,
+                        'message' => 'Data Tanggal Dan Kecamatan Yang Sama Telah Ada Sebelumnya',
+                    ]);
+                 }else{
+                    $data = Lbtt::findOrFail($id);
+                    $data->update([
+                        'tanggal' =>  $request['tanggal'],
+                        'puskesmas_id' =>  $request['updt_puskesmas_id'],
+                        'dokter_terlatih_usg'=>  $request['dokter_terlatih_usg'],
+                        'kader_terlatih_ptkb'=>  $request['kader_terlatih_ptkb'],
+                        'nakes_terlatih_mbts'=>  $request['nakes_terlatih_mbts'],
+                        'nakes_terlatih_tlgb'=>  $request['nakes_terlatih_tlgb'],
+                        'nakes_terlatih_pmba'=>  $request['nakes_terlatih_pmba'],
+                        'nakes_terlatih_sdidtk'=>  $request['nakes_terlatih_sdidtk'],
+                        'nakes_terlatih_imtbsgb'=>  $request['nakes_terlatih_imtbsgb'],
+                        'nakes_terlatih_pmba_sdidtk' =>  $request['nakes_terlatih_pmba_sdidtk'],
+                    ]);
+                    DB::commit();
+                    $response = response()->json($this->responseStore(true, route('backend.lbtt.index')));
+                 }
 
-                DB::commit();
-                $response = response()->json($this->responseStore(true, route('backend.lbtt.index')));
             } catch (Throwable $throw) {
                 dd($throw);
                 DB::rollBack();

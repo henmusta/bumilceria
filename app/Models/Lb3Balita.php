@@ -10,7 +10,7 @@ class Lb3Balita extends Model
     use HasFactory;
     protected $table = 'lb3_balita';
     protected $fillable = [
-      'tahun',
+      'tanggal',
       'puskesmas_id',
       'sasaran_balita_laki_laki',
       'sasaran_balita_perempuan',

@@ -9,7 +9,7 @@ class Lbtt extends Model
 {
     protected $table = 'lbtt';
     protected $fillable = [
-      'tahun',
+      'tanggal',
       'puskesmas_id',
       'dokter_terlatih_usg',
       'kader_terlatih_ptkb',

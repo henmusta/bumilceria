@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lb3Rtk;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -24,6 +25,9 @@ class Lb3RtkController extends Controller
 
       if ($request->ajax()) {
         $data = Lb3Rtk::selectRaw('lb3_rtk.*')->with('puskesmas');
+        if ($request->filled('puskesmas_id')) {
+            $data->where('puskesmas_id',  $request['puskesmas_id']);
+        }
         return DataTables::of($data)
           ->addIndexColumn()
           ->addColumn('action', function ($row) {
@@ -40,7 +44,10 @@ class Lb3RtkController extends Controller
                   </div>';
 
           })
-          ->rawColumns(['action'])
+          ->addColumn('tanggal', function ($row) {
+            return Carbon::parse($row->tanggal)->isoFormat('MMMM YYYY');
+          })
+          ->rawColumns(['action', 'tanggal'])
           ->make(true);
       }
       return view('backend.lb3rtk.index', compact('config', 'page_breadcrumbs'));
@@ -61,7 +68,7 @@ class Lb3RtkController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'anemia_trimester1' => 'required',
             'anemia_trimester3' => 'required',
@@ -82,8 +89,9 @@ class Lb3RtkController extends Controller
 
             DB::beginTransaction();
             try {
-                 $data = Lb3Rtk::create([
-                    'tahun' =>  $request['tahun'],
+                 $cek = ['tanggal'=> $request['tanggal'],  'puskesmas_id' =>  $request['updt_puskesmas_id']];
+                 $data = Lb3Rtk::updateOrCreate($cek,[
+                    'tanggal' =>  $request['tanggal'],
                     'puskesmas_id' =>  $request['updt_puskesmas_id'],
                     'anemia_trimester1' =>  $request['anemia_trimester1'],
                     'anemia_trimester3' =>  $request['anemia_trimester3'],
@@ -151,7 +159,7 @@ class Lb3RtkController extends Controller
     public function update(Request $request, $id)
     {
           $validator = Validator::make($request->all(), [
-            'tahun' => 'required',
+            'tanggal' => 'required',
             'updt_puskesmas_id' => 'required',
             'anemia_trimester1' => 'required',
             'anemia_trimester3' => 'required',
@@ -170,9 +178,22 @@ class Lb3RtkController extends Controller
           if ($validator->passes()) {
             DB::beginTransaction();
             try {
-                $data = Lb3Rtk::find($id);
+             //   $data = Lb3Rtk::find($id);
+
+             $cek_uniqe = Lb3Rtk::where([
+                ['tanggal' ,  $request['tanggal']],
+                ['puskesmas_id' ,  $request['updt_puskesmas_id']],
+                ['id' , '!=' , $id]
+             ])->first();
+             if(isset($cek_uniqe)){
+                $response = response()->json([
+                    'error' => true,
+                    'message' => 'Data Tanggal Dan Kecamatan Yang Sama Telah Ada Sebelumnya',
+                ]);
+             }else{
+                $data = Lb3Rtk::findOrFail($id);
                 $data->update([
-                    'tahun' =>  $request['tahun'],
+                    'tanggal' =>  $request['tanggal'],
                     'puskesmas_id' =>  $request['updt_puskesmas_id'],
                     'anemia_trimester1' =>  $request['anemia_trimester1'],
                     'anemia_trimester3' =>  $request['anemia_trimester3'],
@@ -191,6 +212,9 @@ class Lb3RtkController extends Controller
 
                 DB::commit();
                 $response = response()->json($this->responseStore(true, route('backend.lb3rtk.index')));
+
+             }
+
             } catch (Throwable $throw) {
                 dd($throw);
                 DB::rollBack();

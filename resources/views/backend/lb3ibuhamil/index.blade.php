@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="card">
+   <div class="card bg-light-info shadow-none position-relative overflow-hidden">
         <div class="card-header mb-3">
             <div class="d-flex align-items-start">
                 <div class="flex-grow-1">
@@ -19,14 +19,14 @@
             </div>
 
         </div>
-
+        <input hidden id="user_puskes_id" value="{{Auth::user()->puskesmas->id ?? ''}}">
         <div class="card-body">
             <section class="datatables">
               <div class="table-responsive">
                 <table id="Datatable" class="table table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Tahun</th>
+                            <th>Bulan Tahun</th>
                             <th>Puskesmas</th>
                             <th>Aksi</th>
                           </tr>
@@ -93,12 +93,12 @@
         ajax: {
           url: "{{ route('backend.lb3ibuhamil.index') }}",
           data: function (d) {
-
+            d.puskesmas_id = $('#user_puskes_id').val();
           }
         },
         columns: [
         //   {data: 'image', name: 'image'},
-          {data: 'tahun', name: 'tahun'},
+          {data: 'tanggal', name: 'tanggal'},
           {data: 'puskesmas.name', name: 'puskesmas.name'},
           {data: 'action', name: 'action', width:"10px", orderable: false, searchable: false},
         ],

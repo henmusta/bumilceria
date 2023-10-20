@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DatePickerController;
 use App\Http\Controllers\Backend as Backend;
 use App\Http\Controllers\Api as Api;
 /*
@@ -20,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+Route::resource('datepicker', DatePickerController::class);
 Route::prefix('backend')->name('backend.')->group(function () {
     Route::get('/', [LoginController::class, 'showLoginForm']);
     Route::post('/', [LoginController::class, 'login'])->name('login');
@@ -81,6 +83,10 @@ Route::middleware('auth:henmus')->group(function(){
        Route::resource('lb3brtk', Backend\Lb3BrtkController::class);
 
        Route::resource('lb3balita', Backend\Lb3BalitaController::class);
+
+       Route::resource('lb3jktpda', Backend\Lb3JktpdaController::class);
+
+       Route::resource('lb3kytd', Backend\Lb3KytdController::class);
 
        Route::resource('lki', Backend\LkiController::class);
 
