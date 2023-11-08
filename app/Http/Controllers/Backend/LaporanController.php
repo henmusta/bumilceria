@@ -37,19 +37,10 @@ class LaporanController extends Controller
                     $query->where('name', $jenis);
                 }
         }], $value);
+    }
 
-        // if(isset($jenis)){
-        //     $get_data = array();
-        //     foreach ($data->get() as $key) {
-        //         $oldkey = 'jktpdadetail_sum0_sampai_15';
-        //         $key['mantap'] = $key[ $oldkey];
-        //         unset($key[$oldkey]);
+    public function sumall(){
 
-        //         $get_data[] = $key;
-        //         // dd($key);
-        //     }
-        // }
-        // dd($get_data);
     }
 
     public function data(Request $request){
@@ -116,6 +107,7 @@ class LaporanController extends Controller
         $this->sub_data('lb3rtk', 'covid19', $data, $tahun, $type, $bulan);
         $this->sub_data('lb3rtk', 'abortus', $data, $tahun, $type, $bulan);
         $this->sub_data('lb3rtk', 'lain_lain', $data, $tahun, $type, $bulan);
+        // ->sum(DB::raw('logins_sun + logins_mon as'));
 
         //bayi
 

@@ -105,103 +105,105 @@
                           <tr>
                               <th>Nama Puskesmas</th>
                               {{-- ibu hamil --}}
-                              <th class="text-center" width=>Jumlah Sasaran Ibu Hamil</th>
-                              <th class="text-center" width=>K1 Total</th>
-                              <th class="text-center" width=>K1 Murni</th>
-                              <th class="text-center" width=>K4</th>
-                              <th class="text-center" width=>K6</th>
-                              <th class="text-center" width=>Ibu Hamil Terlalu Tua/Muda</th>
-                              <th class="text-center" width=>Ibu hamil dengan jarak terlalu dekat</th>
-                              <th class="text-center" width=>Ibu hamil dengan kehamilan terlalu banyak</th>
-                              <th class="text-center" width=>K1 Oleh Dokter</th>
-                              <th class="text-center" width=>K5 Oleh Dokter</th>
-                              <th class="text-center" width=>K1 USG Oleh Dokter</th>
-                              <th class="text-center" width=>K5 USG Oleh Dokter</th>
-                              <th class="text-center" width=>Ibu hamil mempunyai buku KIA</th>
+                              <th class="text-center">Jumlah Sasaran Ibu Hamil</th>
+                              <th class="text-center">K1 Total</th>
+                              <th class="text-center">K1 Murni</th>
+                              <th class="text-center">K4</th>
+                              <th class="text-center">K6</th>
+                              <th class="text-center">Ibu Hamil Terlalu Tua/Muda</th>
+                              <th class="text-center">Ibu hamil dengan jarak terlalu dekat</th>
+                              <th class="text-center">Ibu hamil dengan kehamilan terlalu banyak</th>
+                              <th class="text-center">Total Ibu Hamil</th>
+                              <th class="text-center">K1 Oleh Dokter</th>
+                              <th class="text-center">K5 Oleh Dokter</th>
+                              <th class="text-center">K1 USG Oleh Dokter</th>
+                              <th class="text-center">K5 USG Oleh Dokter</th>
+                              <th class="text-center">Ibu hamil mempunyai buku KIA</th>
 
 
 
-                              <th class="text-center" width=>Jumlah Sasaran Ibu Bersalin</th>
-                              <th class="text-center" width=>Ibu Bersalin</th>
-                              <th class="text-center" width=>Ibu Bersalin Nakes</th>
-                              <th class="text-center" width=>Ibu bersalin faskes</th>
-                              <th class="text-center" width=>KF1</th>
-                              <th class="text-center" width=>KF Lengkap</th>
-                              <th class="text-center" width=>Vit A Ibu Nifas</th>
+                              <th class="text-center">Jumlah Sasaran Ibu Bersalin</th>
+                              <th class="text-center">Ibu Bersalin</th>
+                              <th class="text-center">Ibu Bersalin Nakes</th>
+                              <th class="text-center">Ibu bersalin faskes</th>
+                              <th class="text-center">KF1</th>
+                              <th class="text-center">KF Lengkap</th>
+                              <th class="text-center">Vit A Ibu Nifas</th>
 
 
 
 
-                              <th class="text-center" width=>Anemia Trimester I</th>
-                              <th class="text-center" width=>Anemia Trimester III</th>
-                              <th class="text-center" width=>Pendarahan</th>
-                              <th class="text-center" width=>Pre Eklamsia</th>
-                              <th class="text-center" width=>Infeksi</th>
-                              <th class="text-center" width=>Tuberculosis</th>
-                              <th class="text-center" width=>Malaria</th>
-                              <th class="text-center" width=>Jantung</th>
-                              <th class="text-center" width=>Diabetes Mellitus</th>
-                              <th class="text-center" width=>Obesitas</th>
-                              <th class="text-center" width=>Covid19</th>
-                              <th class="text-center" width=>Abortus</th>
-                              <th class="text-center" width=>Lain Lain</th>
+                              <th class="text-center">Anemia Trimester I</th>
+                              <th class="text-center">Anemia Trimester III</th>
+                              <th class="text-center">Pendarahan</th>
+                              <th class="text-center">Pre Eklamsia</th>
+                              <th class="text-center">Infeksi</th>
+                              <th class="text-center">Tuberculosis</th>
+                              <th class="text-center">Malaria</th>
+                              <th class="text-center">Jantung</th>
+                              <th class="text-center">Diabetes Mellitus</th>
+                              <th class="text-center">Obesitas</th>
+                              <th class="text-center">Covid19</th>
+                              <th class="text-center">Abortus</th>
+                              <th class="text-center">Lain Lain</th>
+
+                              <th class="text-center">Total LB3 resiko tinggi Komplikasi</th>
+
+                              <th class="text-center">Sasaran Bayi Laki Laki</th>
+                              <th class="text-center">Sasaran Bayi Perempuan</th>
+                              <th class="text-center">Bayi Lahir Laki Laki</th>
+                              <th class="text-center">Bayi Lahir Perempuan</th>
+                              <th class="text-center">Total Bayi Laki-Laki & Perempuan</th>
+                              <th class="text-center">KN1 Laki Laki</th>
+                              <th class="text-center">KN1 Perempuan</th>
+                              <th class="text-center">KN3 Laki Laki</th>
+                              <th class="text-center">KN3 Perempuan</th>
+                              <th class="text-center">BBL laki-laki diperiksa SHK</th>
+                              <th class="text-center">BBL perempuan diperiksa SHK</th>
 
 
 
-                              <th class="text-center" width=>Sasaran Bayi Laki Laki</th>
-                              <th class="text-center" width=>Sasaran Bayi Perempuan</th>
-                              <th class="text-center" width=>Bayi Lahir Laki Laki</th>
-                              <th class="text-center" width=>Bayi Lahir Perempuan</th>
-                              <th class="text-center" width=>KN1 Laki Laki</th>
-                              <th class="text-center" width=>KN1 Perempuan</th>
-                              <th class="text-center" width=>KN3 Laki Laki</th>
-                              <th class="text-center" width=>KN3 Perempuan</th>
-                              <th class="text-center" width=>BBL laki-laki diperiksa SHK</th>
-                              <th class="text-center" width=>BBL perempuan diperiksa SHK</th>
+                              <th class="text-center">BBLR</th>
+                              <th class="text-center">Asfiksia</th>
+                              <th class="text-center">Infeksi</th>
+                              <th class="text-center">Tetanus Neonatorum</th>
+                              <th class="text-center">Kelainan kongenital</th>
+                              <th class="text-center">Covid-19</th>
+                              <th class="text-center">Hipotiroid Kongenital</th>
+                              <th class="text-center">Lain Lain</th>
 
 
 
-                              <th class="text-center" width=>BBLR</th>
-                              <th class="text-center" width=>Asfiksia</th>
-                              <th class="text-center" width=>Infeksi</th>
-                              <th class="text-center" width=>Tetanus Neonatorum</th>
-                              <th class="text-center" width=>Kelainan kongenital</th>
-                              <th class="text-center" width=>Covid-19</th>
-                              <th class="text-center" width=>Hipotiroid Kongenital</th>
-                              <th class="text-center" width=>Lain Lain</th>
+                              <th class="text-center">Sasaran Balita Laki laki</th>
+                              <th class="text-center">Sasaran Balita Perempuan</th>
+                              <th class="text-center">Balita laki-laki memiliki buku KIA</th>
+                              <th class="text-center">Balita perempuan memiliki buku KIA</th>
+                              <th class="text-center">Balita laki-laki dipantau tumbuh kembang</th>
+                              <th class="text-center">Balita Perempuan dipantau tumbuh kembang</th>
+                              <th class="text-center">Balita laki-laki dengan gangguan perkembangan</th>
+                              <th class="text-center">Balita Perempuan dengan gangguan perkembangan</th>
+                              <th class="text-center">SDIDTK balita laki-laki</th>
+                              <th class="text-center">SDIDTK balita perempuan</th>
+                              <th class="text-center">Kunjungan balita sakit (laki-laki)</th>
+                              <th class="text-center">Kunjungan balita sakit (Perempuan)</th>
+                              <th class="text-center">MTBS laki-laki</th>
+                              <th class="text-center">MTBS Perempuan</th>
 
 
 
-                              <th class="text-center" width=>Sasaran Balita Laki laki</th>
-                              <th class="text-center" width=>Sasaran Balita Perempuan</th>
-                              <th class="text-center" width=>Balita laki-laki memiliki buku KIA</th>
-                              <th class="text-center" width=>Balita perempuan memiliki buku KIA</th>
-                              <th class="text-center" width=>Balita laki-laki dipantau tumbuh kembang</th>
-                              <th class="text-center" width=>Balita Perempuan dipantau tumbuh kembang</th>
-                              <th class="text-center" width=>Balita laki-laki dengan gangguan perkembangan</th>
-                              <th class="text-center" width=>Balita Perempuan dengan gangguan perkembangan</th>
-                              <th class="text-center" width=>SDIDTK balita laki-laki</th>
-                              <th class="text-center" width=>SDIDTK balita perempuan</th>
-                              <th class="text-center" width=>Kunjungan balita sakit (laki-laki)</th>
-                              <th class="text-center" width=>Kunjungan balita sakit (Perempuan)</th>
-                              <th class="text-center" width=>MTBS laki-laki</th>
-                              <th class="text-center" width=>MTBS Perempuan</th>
+                              <th class="text-center">Jumlah peserta kelas ibu hamil</th>
+                              <th class="text-center">Jumlah peserta kelas ibu balita</th>
 
 
 
-                              <th class="text-center" width=>Jumlah peserta kelas ibu hamil</th>
-                              <th class="text-center" width=>Jumlah peserta kelas ibu balita</th>
-
-
-
-                              <th class="text-center" width=>Dokter terlatih USG</th>
-                              <th class="text-center" width=>Kader terlatih pemantauan tumbuh kembang balita</th>
-                              <th class="text-center" width=>Nakes terlatih MTBS</th>
-                              <th class="text-center" width=>Nakes terlatih tata laksana gizi buruk</th>
-                              <th class="text-center" width=>Nakes terlatih PMBA</th>
-                              <th class="text-center" width=>Nakes terlatih SDIDTK</th>
-                              <th class="text-center" width=>Nakes terlatih integrasi MTBS-Gizi Buruk</th>
-                              <th class="text-center" width=>Nakes terlatih integrasi PMBA-SDIDTK</th>
+                              <th class="text-center">Dokter terlatih USG</th>
+                              <th class="text-center">Kader terlatih pemantauan tumbuh kembang balita</th>
+                              <th class="text-center">Nakes terlatih MTBS</th>
+                              <th class="text-center">Nakes terlatih tata laksana gizi buruk</th>
+                              <th class="text-center">Nakes terlatih PMBA</th>
+                              <th class="text-center">Nakes terlatih SDIDTK</th>
+                              <th class="text-center">Nakes terlatih integrasi MTBS-Gizi Buruk</th>
+                              <th class="text-center">Nakes terlatih integrasi PMBA-SDIDTK</th>
 
 
                               <th>(Mental) 0 Sampai 15</th>
@@ -239,9 +241,9 @@
                       </tbody>
                       <tfoot>
                         <tr>
-                            <td class="text-center" width=>Total</td>
-                            @for($i = 1; $i < 99; $i++)
-                            <td class="text-center" width=>{{$i}}</td>
+                            <td class="text-center">Total</td>
+                            @for($i = 1; $i < 102; $i++)
+                            <td class="text-center">{{$i}}</td>
                             @endfor
                         </tr>
                       </tfoot>
@@ -264,7 +266,7 @@
 
 @endsection
 @section('script')
-
+<script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
   <script>
 
      $(document).ready(function () {
@@ -371,38 +373,17 @@
             console.log(data.id);
       });
         const numbersArray = [];
-        for (let i = 1; i <= 98; i++) {
+        for (let i = 1; i <= 101; i++) {
           numbersArray.push(i);
         }
-        console.log( numbersArray);
+
       let dataTable = $('#Datatable').DataTable({
         dom: 'Bfrtip',
         buttons: [
 
             { extend: 'excelHtml5', footer: true },
         ],
-       footerCallback: function ( row, rowData, start, end, display ) {
-       var api = this.api(), rowData;
-       var intVal = function ( i ) {
-           return typeof i === 'string' ?
-               i.replace(/[\$,]/g, '')*1 :
-               typeof i === 'number' ?
-                   i : 0;
-       };
 
-       for (var i=1; i<=98; i++) {
-           var colum = 'col'+ i;
-           var colum = api
-               .column( i )
-               .data()
-               .reduce( function (a, b) {
-                   return intVal(a) + intVal(b);
-               }, 0 );
-           $( api.column(i).footer() ).html(
-               colum
-           );
-       }
-      },
        scrollX: true,
        processing: true,
        serverSide: true,
@@ -433,6 +414,14 @@
        {data: 'lb3ibuhamil_sum_ihttm', name: 'lb3ibuhamil_sum_ihttm'},
        {data: 'lb3ibuhamil_sum_ibdjtd', name: 'lb3ibuhamil_sum_ibdjtd'},
        {data: 'lb3ibuhamil_sum_ihdktb', name: 'lb3ibuhamil_sum_ihdktb'},
+       {
+               data: null,  width: "1%",
+               render: function (data, type, row, meta) {
+                   return row.lb3ibuhamil_sum_ihttm +
+                          row.lb3ibuhamil_sum_ibdjtd +
+                          row.lb3ibuhamil_sum_ihdktb;
+               }
+       },
        {data: 'lb3ibuhamil_sum_k1_ok', name: 'lb3ibuhamil_sum_k1_ok'},
        {data: 'lb3ibuhamil_sum_k5_ok', name: 'lb3ibuhamil_sum_k5_ok'},
        {data: 'lb3ibuhamil_sum_k1_usg_ok', name: 'lb3ibuhamil_sum_k1_usg_ok'},
@@ -463,10 +452,36 @@
        {data: 'lb3rtk_sum_abortus', name: 'lb3rtk_sum_abortus'},
        {data: 'lb3rtk_sum_lain_lain', name: 'lb3rtk_sum_lain_lain'},
 
+       {
+        data: null,className:'text-center',  width: "1%",
+               render: function (data, type, row, meta) {
+                   return row.lb3rtk_sum_anemia_trimester1 +
+                          row.lb3rtk_sum_anemia_trimester3 +
+                          row.lb3rtk_sum_pendarahan +
+                          row.lb3rtk_sum_pre_eklamsia +
+                          row.lb3rtk_sum_infeksi +
+                          row.lb3rtk_sum_tuberculosis +
+                          row.lb3rtk_sum_malaria +
+                          row.lb3rtk_sum_jantung +
+                          row.lb3rtk_sum_diabetes_mellitus +
+                          row.lb3rtk_sum_obesitas +
+                          row.lb3rtk_sum_covid19 +
+                          row.lb3rtk_sum_abortus +
+                          row.lb3rtk_sum_lain_lain ;
+               }
+        },
+
        {data: 'lb3bayi_sum_sasaran_bayi_laki_laki', name: 'lb3bayi_sum_sasaran_bayi_laki_laki'},
        {data: 'lb3bayi_sum_sasaran_bayi_perempuan', name: 'lb3bayi_sum_sasaran_bayi_perempuan'},
        {data: 'lb3bayi_sum_bayi_lahir_laki_laki', name: 'lb3bayi_sum_bayi_lahir_laki_laki'},
        {data: 'lb3bayi_sum_bayi_lahir_perempuan', name: 'lb3bayi_sum_bayi_lahir_perempuan'},
+       {
+        data: null,className:'text-center',  width: "1%",
+               render: function (data, type, row, meta) {
+                   return row.lb3bayi_sum_bayi_lahir_laki_laki +
+                          row.lb3bayi_sum_bayi_lahir_perempuan;
+               }
+       },
        {data: 'lb3bayi_sum_kn1_laki_laki', name: 'lb3bayi_sum_kn1_laki_laki'},
        {data: 'lb3bayi_sum_kn1_perempuan', name: 'lb3bayi_sum_kn1_perempuan'},
        {data: 'lb3bayi_sum_kn3_laki_laki', name: 'lb3bayi_sum_kn3_laki_laki'},
@@ -553,7 +568,64 @@
              targets: numbersArray,
            },
        ],
+       footerCallback: function ( row, rowData, start, end, display ) {
+       var api = this.api(), rowData;
+       var intVal = function ( i ) {
+           return typeof i === 'string' ?
+               i.replace(/[\$,]/g, '')*1 :
+               typeof i === 'number' ?
+                   i : 0;
+       };
+
+
+       let sum_bumil = 0;
+       let sum_bayi = 0;
+       let sum_kompilasi = 0;
+       for (var i=1; i<=100; i++) {
+            var colum = api.column(i).data();
+
+            // console.log(colum.length);
+            let total = colum.length ?
+                colum.reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                } ) :
+            0;
+
+            for(j = 6; j <= 8; j++){
+                if(j == i){
+                    sum_bumil += intVal(total);
+                }
+            }
+            if(i == 9){
+                total = sum_bumil;
+            }
+
+            for(j = 22; j <= 34; j++){
+                if(j == i){
+                    sum_kompilasi += intVal(total);
+                }
+            }
+
+            if(i == 35){
+                total = sum_kompilasi;
+            }
+            for(j = 38; j <= 39; j++){
+                if(j == i){
+                    sum_bayi += intVal(total);
+                }
+            }
+            if(i == 40){
+                total = sum_bayi;
+            }
+
+
+           $( api.column(i).footer() ).html(
+            total
+           );
+       }
+      },
    });
+//    $('#Datatable').DataTable().column(9).cache('search');
 $("#terapkan_filter").click(function() {
    dataTable.draw();
    // get_saldo();

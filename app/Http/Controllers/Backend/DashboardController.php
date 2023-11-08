@@ -39,11 +39,6 @@ class DashboardController extends Controller
             $totalPuskesmas = Puskesmas::query()->count();
 
 
-            // $r = 0;
-            // $g = 0;
-            // $b = 0;
-
-
             if(isset($tgl_awal)){
                 $startDate = $request['tgl_awal'];
             }else{
